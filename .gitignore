@@ -1,0 +1,75 @@
+############
+# VISUAL STUDIO
+############
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+############
+# BUILD FOLDERS
+############
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+**/bin/
+**/obj/
+
+# NuGet intermediate
+*.csproj.nuget.dgspec.json
+*.nuget.g.props
+*.nuget.g.targets
+project.assets.json
+project.nuget.cache
+
+############
+# DEBUG / RELEASE
+############
+Debug/
+Release/
+**/Debug/
+**/Release/
+
+############
+# PUBLISH OUTPUT
+############
+artifacts/
+out/
+publish/
+dist/
+
+############
+# LOGS & TEMP
+############
+*.log
+*.tlog
+*.tmp
+*.temp
+*.cache
+tmp/
+
+############
+# VS CODE / RIDER
+############
+.vscode/
+.idea/
+
+############
+# NUGET
+############
+packages/
+*.nupkg
+*.snupkg
+*.package.map
+
+############
+# OS FILES
+############
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Mac
+.DS_Store

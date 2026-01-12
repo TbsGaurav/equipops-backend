@@ -1,0 +1,123 @@
+﻿//==========================================LOCAL=======================================//
+
+//{
+//  "Routes": [
+//    {
+//      "DownstreamPathTemplate": "/api/auth/{everything}",
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "localhost",
+//          "Port": 5036
+//        }
+//      ],
+//      "UpstreamPathTemplate": "/api/auth/{everything}",
+//      "UpstreamHttpMethod": [ "POST", "GET" ]
+//    },
+//    {
+//      "DownstreamPathTemplate": "/api/org/{everything}",
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "localhost",
+//          "Port": 5037
+//        }
+//      ],
+//      "UpstreamPathTemplate": "/api/org/{everything}",
+//      "UpstreamHttpMethod": [ "POST", "GET", "PUT", "DELETE" ]
+//    },
+//    {
+//      "DownstreamPathTemplate": "/api/interviewer/{everything}",
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "localhost",
+//          "Port": 5038
+//        }
+//      ],
+//      "UpstreamPathTemplate": "/api/interviewer/{everything}",
+//      "UpstreamHttpMethod": [ "POST", "GET" ]
+//    }
+//  ],
+//  "GlobalConfiguration": {
+//    "BaseUrl": "http://localhost:7001"
+//  }
+//}
+
+//==========================================IIS=======================================//
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/auth/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5036
+        }
+      ],
+      "UpstreamPathTemplate": "/api/auth/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5037
+        }
+      ],
+      "UpstreamPathTemplate": "/api/org/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5039
+        }
+      ],
+      "UpstreamPathTemplate": "/api/setting/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5038
+        }
+      ],
+      "UpstreamPathTemplate": "/api/interview/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "UpstreamPathTemplate": "/interview/uploads/{everything}",
+      "DownstreamPathTemplate": "/Uploads/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5038
+        }
+      ],
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "UpstreamPathTemplate": "/org/uploads/{everything}",
+      "DownstreamPathTemplate": "/Uploads/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5038
+        }
+      ],
+      "UpstreamHttpMethod": [ "GET" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:7001"
+  }
+}
