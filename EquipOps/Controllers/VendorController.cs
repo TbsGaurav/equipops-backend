@@ -1,11 +1,12 @@
 ﻿using EquipOps.Model.Vendor;
-using EquipOps.Services.Interface;
+using EquipOps.Serives.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EquipOps.Controllers 
 {
     [Route("api/[controller]")]
+    [ApiController]
     //[Authorize]
     [AllowAnonymous]
 

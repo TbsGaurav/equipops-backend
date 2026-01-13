@@ -1,7 +1,7 @@
 using CommonHelper.Helper;
 using CommonHelper.Helpers;
-using EquipOps.Services.Implementation;
-using EquipOps.Services.Interface;
+using EquipOps.Serives.Implementation;
+using EquipOps.Serives.Interface;
 
 namespace EquipOps
 {
@@ -11,16 +11,10 @@ namespace EquipOps
         {
 			services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
 			services.AddScoped<IPgHelper, PgHelper>(); 
-
 			// Equipment
 			services.AddScoped<IEquipmentService, EquipmentService>();
-
             // Vendor
             services.AddScoped<IVendorService, VendorService>();
-
-            // Equipment
-            services.AddScoped<IEquipmentCategoryService, EquipmentCategoryService>();
-
             return services;
         }
     }

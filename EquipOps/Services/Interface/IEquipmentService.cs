@@ -1,8 +1,9 @@
 ﻿using EquipOps.Model.Requests.Equipment;
 using Microsoft.AspNetCore.Mvc;
-
-namespace EquipOps.Services.Implementation
+namespace EquipOps.Serives.Implementation
 {
+	
+
 	public interface IEquipmentService
 	{
 		Task<IActionResult> AddOrUpdateAsync(EquipmentRequest request);

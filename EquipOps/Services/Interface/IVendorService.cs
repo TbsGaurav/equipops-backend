@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using EquipOps.Model.Vendor;
+﻿using EquipOps.Model.Vendor;
+using OrganizationService.Api.Helpers.ResponseHelpers.Models;
 
-namespace EquipOps.Services.Interface
+namespace EquipOps.Serives.Interface
 {
+	using Microsoft.AspNetCore.Mvc;
+	using EquipOps.Model.Vendor;
+
 	public interface IVendorService
 	{
 		Task<IActionResult> VendorCreateAsync(VendorRequest model);
