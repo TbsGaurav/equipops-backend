@@ -6,7 +6,7 @@ using EquipOps.Model.Requests.Equipment;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 
-namespace EquipOps.Serives.Implementation
+namespace EquipOps.Services.Implementation
 {
 	public sealed class EquipmentService : IEquipmentService
 	{
