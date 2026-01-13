@@ -24,18 +24,17 @@ namespace EquipOps.Services.Implementation
 			try
 			{
 				var param = new Dictionary<string, DbParam>
-				{
-					{ "p_equipment_id", new DbParam { Value = request.EquipmentId, DbType = DbType.Int32 } },
-					{ "p_organization_id", new DbParam { Value = request.OrganizationId, DbType = DbType.Int32 } },
-					{ "p_category_id", new DbParam { Value = request.CategoryId, DbType = DbType.Int32 } },
-					{ "p_name", new DbParam { Value = request.Name, DbType = DbType.String } },
-					{ "p_type", new DbParam { Value = request.Type, DbType = DbType.String } },
-					{ "p_qr_code", new DbParam { Value = request.QrCode, DbType = DbType.String } },
-					{ "p_location", new DbParam { Value = request.Location, DbType = DbType.String } },
-					{ "p_purchase_date", new DbParam { Value = request.PurchaseDate, DbType = DbType.DateTime } },
-					{ "p_status", new DbParam { Value = request.Status, DbType = DbType.String } },
-					{ "p_return_equipment_id", new DbParam { DbType = DbType.Int32, Direction = ParameterDirection.InputOutput } }
-				};
+                {
+                    { "p_equipment_id", new DbParam { Value = request.EquipmentId, DbType = DbType.Int32 } },
+                    { "p_organization_id", new DbParam { Value = request.OrganizationId, DbType = DbType.Int32 } },
+                    { "p_category_id", new DbParam { Value = request.CategoryId, DbType = DbType.Int32 } },
+                    { "p_name", new DbParam { Value = request.Name, DbType = DbType.String } },
+                    { "p_type", new DbParam { Value = request.Type, DbType = DbType.String } },
+                    { "p_qr_code", new DbParam { Value = request.QrCode, DbType = DbType.String } },
+                    { "p_location", new DbParam { Value = request.Location, DbType = DbType.String } },
+                    { "p_purchase_date", new DbParam { Value = request.PurchaseDate?.Date, DbType = DbType.Date }},
+                    { "p_status", new DbParam { Value = request.Status, DbType = DbType.Int32 } }
+                };
 
 				var result = await _pgHelper.CreateUpdateAsync("master.sp_equipment_add_update", param);
 

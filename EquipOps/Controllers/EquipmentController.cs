@@ -60,15 +60,15 @@ namespace EquipOps.API.Controller
             return result;
         }
 
-        [HttpPost("delete")]
-        public async Task<IActionResult> DeleteEquipment([FromBody] EquipmentRequest request)
-        {
-            _logger.LogInformation(
-                "API hit: DeleteEquipment. EquipmentId={EquipmentId}",
-                request.EquipmentId);
+		[HttpPost("delete")]
+		public async Task<IActionResult> DeleteEquipment(int EquipmentId)
+		{
+			_logger.LogInformation(
+				"API hit: DeleteEquipment. EquipmentId={EquipmentId}",
+				EquipmentId);
 
-            var result = await _equipmentService.DeleteAsync(request.EquipmentId);
-            return result;
-        }
-    }
+			var result = await _equipmentService.DeleteAsync(EquipmentId);
+			return result;
+		}
+	}
 }
