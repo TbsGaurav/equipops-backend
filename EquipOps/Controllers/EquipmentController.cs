@@ -14,9 +14,7 @@ namespace EquipOps.API.Controller
 		private readonly ILogger<EquipmentController> _logger;
 		private readonly IEquipmentService _equipmentService;
 
-		public EquipmentController(
-			ILogger<EquipmentController> logger,
-			IEquipmentService equipmentService)
+		public EquipmentController(ILogger<EquipmentController> logger,IEquipmentService equipmentService)
 		{
 			_logger = logger;
 			_equipmentService = equipmentService;
