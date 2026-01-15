@@ -1,7 +1,9 @@
 using CommonHelper.Helper;
 using CommonHelper.Helpers;
+using EquipOps.Model.FluentValidationModel;
 using EquipOps.Services.Implementation;
 using EquipOps.Services.Interface;
+using FluentValidation;
 
 namespace EquipOps
 {
@@ -11,6 +13,7 @@ namespace EquipOps
         {
 			services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
 			services.AddScoped<IPgHelper, PgHelper>();
+
 			// Equipment
 			services.AddValidatorsFromAssemblyContaining<EquipmentRequestValidator>();
 			services.AddScoped<IEquipmentService, EquipmentService>();
@@ -20,6 +23,9 @@ namespace EquipOps
 
             // Equipment
             services.AddScoped<IEquipmentCategoryService, EquipmentCategoryService>();
+
+            // Organization
+            services.AddScoped<IOrganizationService1, OrganizationService1>();
 
             return services;
         }
