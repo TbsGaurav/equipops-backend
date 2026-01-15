@@ -20,9 +20,6 @@ namespace EquipOps.Services.Implementation
             _logger = logger;
         }
 
-        /* -------------------------------------------------------------
-         * CREATE / UPDATE
-         * -------------------------------------------------------------*/
         public async Task<IActionResult> EquipmentCategoryCreateAsync(EquipmentCategoryRequest request)
         {
             try
@@ -63,9 +60,6 @@ namespace EquipOps.Services.Implementation
             }
         }
 
-        /* -------------------------------------------------------------
-         * GET BY ID
-         * -------------------------------------------------------------*/
         public async Task<IActionResult> EquipmentCategoryByIdAsync(int category_id)
         {
             try
@@ -108,9 +102,6 @@ namespace EquipOps.Services.Implementation
             }
         }
 
-        /* -------------------------------------------------------------
-         * DELETE
-         * -------------------------------------------------------------*/
         public async Task<IActionResult> EquipmentCategoryDeleteAsync(int category_id)
         {
             try
@@ -144,9 +135,6 @@ namespace EquipOps.Services.Implementation
             }
         }
 
-        /* -------------------------------------------------------------
-         * LIST
-         * -------------------------------------------------------------*/
         public async Task<IActionResult> EquipmentCategoryListAsync(
             string? search,
             int length,

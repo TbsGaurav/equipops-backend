@@ -11,7 +11,7 @@ namespace EquipOps.Controllers
 
     public class VendorController(IVendorService _vendorService) : ControllerBase
     {
-        [HttpPost("vendorCreate")]
+        [HttpPost("vendorCreateUpdate")]
         public async Task<IActionResult> VendorCreate([FromBody] VendorRequest request)
         {
             var result = await _vendorService.VendorCreateAsync(request);
