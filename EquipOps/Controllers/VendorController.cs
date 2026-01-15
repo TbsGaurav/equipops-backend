@@ -38,7 +38,7 @@ namespace EquipOps.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("vendorDelete")]
+        [HttpPost("vendorDelete")]
         public async Task<IActionResult> VendorDelete(int vendor_id)
         {
             var result = await _vendorService.VendorDeleteAsync(vendor_id);

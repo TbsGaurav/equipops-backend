@@ -2,49 +2,50 @@
 using CommonHelper.Helper;
 using CommonHelper.Helpers;
 using CommonHelper.ResponseHelpers.Handlers;
-using EquipOps.Model.EquipmentCategory;
+using EquipOps.Model.EquipmentFailure;
 using EquipOps.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 
 namespace EquipOps.Services.Implementation
 {
-    public class EquipmentCategoryService : IEquipmentCategoryService
+    public class EquipmentFailureService : IEquipmentFailureService
     {
         private readonly IPgHelper _pgHelper;
-        private readonly ILogger<EquipmentCategoryService> _logger;
+        private readonly ILogger<EquipmentFailureService> _logger;
 
-        public EquipmentCategoryService(IPgHelper pgHelper, ILogger<EquipmentCategoryService> logger)
+        public EquipmentFailureService(IPgHelper pgHelper, ILogger<EquipmentFailureService> logger)
         {
             _pgHelper = pgHelper;
             _logger = logger;
         }
 
-        /* -------------------------------------------------------------
-         * CREATE / UPDATE
-         * -------------------------------------------------------------*/
-        public async Task<IActionResult> EquipmentCategoryCreateAsync(EquipmentCategoryRequest request)
+        public async Task<IActionResult> EquipmentFailureCreateAsync(EquipmentFailureRequest request)
         {
             try
             {
                 var param = new Dictionary<string, DbParam>
                 {
-                    { "p_return_category_id", new DbParam { DbType = DbType.Int32, Direction = ParameterDirection.InputOutput } },
+                    { "p_return_failure_id", new DbParam { DbType = DbType.Int32, Direction = ParameterDirection.InputOutput } },
                     { "p_return_updated_at", new DbParam { DbType = DbType.DateTime, Direction = ParameterDirection.InputOutput } },
-                    { "p_category_id", new DbParam { Value = request.category_id, DbType = DbType.Int32 } },
+                    { "p_failure_id", new DbParam { Value = request.failure_id, DbType = DbType.Int32 } },
                     { "p_organization_id", new DbParam { Value = request.organization_id, DbType = DbType.Int32 } },
-                    { "p_category_name", new DbParam { Value = request.category_name, DbType = DbType.String } },
-                    { "p_description", new DbParam { Value = request.description, DbType = DbType.String } }
+                    { "p_equipment_id", new DbParam { Value = request.equipment_id, DbType = DbType.Int32 } },
+                    { "p_subpart_id", new DbParam { Value = request.subpart_id, DbType = DbType.Int32 } },
+                    { "p_failure_date", new DbParam { Value = request.failure_date, DbType = DbType.DateTime } },
+                    { "p_failure_type", new DbParam { Value = request.failure_type, DbType = DbType.String } },
+                    { "p_description", new DbParam { Value = request.description, DbType = DbType.String } },
+                    { "p_downtime_minutes", new DbParam { Value = request.downtime_minutes, DbType = DbType.Int32 } }
                 };
 
                 var result = await _pgHelper.CreateUpdateAsync(
-                    "master.sp_equipment_category_create_update",
+                    "master.sp_equipment_failure_create_update",
                     param
                 );
 
-                string message = request.category_id == null || request.category_id == 0
-                    ? "Equipment category created successfully."
-                    : "Equipment category updated successfully.";
+                string message = request.failure_id == null || request.failure_id == 0
+                    ? "Equipment failure created successfully."
+                    : "Equipment failure updated successfully.";
 
                 return new OkObjectResult(
                     ResponseHelper<dynamic>.Success(message, result)
@@ -52,7 +53,7 @@ namespace EquipOps.Services.Implementation
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Equipment Category save error");
+                _logger.LogError(ex, "Equipment Failure save error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
                         "Internal server error.",
@@ -63,21 +64,18 @@ namespace EquipOps.Services.Implementation
             }
         }
 
-        /* -------------------------------------------------------------
-         * GET BY ID
-         * -------------------------------------------------------------*/
-        public async Task<IActionResult> EquipmentCategoryByIdAsync(int category_id)
+        public async Task<IActionResult> EquipmentFailureByIdAsync(int failure_id)
         {
             try
             {
                 var param = new Dictionary<string, DbParam>
                 {
-                    { "p_category_id", new DbParam { Value = category_id, DbType = DbType.Int32 } },
-                    { "ref", new DbParam { Value = "equipment_category_by_id_cursor", DbType = DbType.String, Direction = ParameterDirection.InputOutput } }
+                    { "p_failure_id", new DbParam { Value = failure_id, DbType = DbType.Int32 } },
+                    { "ref", new DbParam { Value = "equipment_failure_by_id_cursor", DbType = DbType.String, Direction = ParameterDirection.InputOutput } }
                 };
 
                 dynamic result = await _pgHelper.ListAsync(
-                    "master.sp_equipment_category_getbyid",
+                    "master.sp_equipment_failure_getbyid",
                     param
                 );
 
@@ -86,18 +84,18 @@ namespace EquipOps.Services.Implementation
                 if (list == null || !list.Any())
                     return new NotFoundObjectResult(
                         ResponseHelper<string>.Error(
-                            "Equipment category not found.",
+                            "Equipment failure not found.",
                             statusCode: StatusCodeEnum.NOT_FOUND
                         )
                     );
 
                 return new OkObjectResult(
-                    ResponseHelper<dynamic>.Success("Equipment category found.", list.First())
+                    ResponseHelper<dynamic>.Success("Equipment failure found.", list.First())
                 );
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Get Equipment Category error");
+                _logger.LogError(ex, "Get Equipment Failure error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
                         "Internal server error.",
@@ -108,32 +106,28 @@ namespace EquipOps.Services.Implementation
             }
         }
 
-        /* -------------------------------------------------------------
-         * DELETE
-         * -------------------------------------------------------------*/
-        public async Task<IActionResult> EquipmentCategoryDeleteAsync(int category_id)
+        public async Task<IActionResult> EquipmentFailureDeleteAsync(int failure_id)
         {
             try
             {
                 var param = new Dictionary<string, DbParam>
                 {
-                    { "p_return_category_id", new DbParam { DbType = DbType.Int32, Direction = ParameterDirection.InputOutput } },
-                    { "p_return_updated_at", new DbParam { DbType = DbType.DateTime, Direction = ParameterDirection.InputOutput } },
-                    { "p_category_id", new DbParam { Value = category_id, DbType = DbType.Int32 } }
+                    { "p_return_failure_id", new DbParam { DbType = DbType.Int32, Direction = ParameterDirection.InputOutput } },
+                    { "p_failure_id", new DbParam { Value = failure_id, DbType = DbType.Int32 } }
                 };
 
                 var result = await _pgHelper.CreateUpdateAsync(
-                    "master.sp_equipment_category_delete",
+                    "master.sp_equipment_failure_delete",
                     param
                 );
 
                 return new OkObjectResult(
-                    ResponseHelper<dynamic>.Success("Equipment category deleted successfully.", result)
+                    ResponseHelper<dynamic>.Success("Equipment failure deleted successfully.", result)
                 );
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Delete Equipment Category error");
+                _logger.LogError(ex, "Delete Equipment Failure error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
                         "Internal server error.",
@@ -144,10 +138,7 @@ namespace EquipOps.Services.Implementation
             }
         }
 
-        /* -------------------------------------------------------------
-         * LIST
-         * -------------------------------------------------------------*/
-        public async Task<IActionResult> EquipmentCategoryListAsync(
+        public async Task<IActionResult> EquipmentFailureListAsync(
             string? search,
             int length,
             int page,
@@ -164,11 +155,11 @@ namespace EquipOps.Services.Implementation
                     { "p_order_column", new DbParam { Value = orderColumn, DbType = DbType.String } },
                     { "p_order_direction", new DbParam { Value = orderDirection, DbType = DbType.String } },
                     { "o_total_records", new DbParam { DbType = DbType.Int32, Direction = ParameterDirection.InputOutput } },
-                    { "ref", new DbParam { Value = "equipment_category_cursor", DbType = DbType.String, Direction = ParameterDirection.InputOutput } }
+                    { "ref", new DbParam { Value = "equipment_failure_cursor", DbType = DbType.String, Direction = ParameterDirection.InputOutput } }
                 };
 
                 dynamic result = await _pgHelper.ListAsync(
-                    "master.sp_equipment_category_list",
+                    "master.sp_equipment_failure_list",
                     param
                 );
 
@@ -177,22 +168,22 @@ namespace EquipOps.Services.Implementation
                 if (list == null || !list.Any())
                     return new NotFoundObjectResult(
                         ResponseHelper<string>.Error(
-                            "No equipment categories found.",
+                            "No equipment failures found.",
                             statusCode: StatusCodeEnum.NOT_FOUND
                         )
                     );
 
                 return new OkObjectResult(
-                    ResponseHelper<dynamic>.Success("Equipment categories retrieved.", new
+                    ResponseHelper<dynamic>.Success("Equipment failures retrieved.", new
                     {
                         TotalNumbers = result.o_total_records,
-                        CategoryData = list
+                        FailureData = list
                     })
                 );
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "List Equipment Category error");
+                _logger.LogError(ex, "List Equipment Failure error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
                         "Internal server error.",

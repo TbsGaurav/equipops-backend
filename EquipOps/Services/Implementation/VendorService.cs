@@ -9,7 +9,7 @@ using System.Data;
 
 namespace EquipOps.Services.Implementation
 {
-    public sealed class VendorService : IVendorService
+    public class VendorService : IVendorService
     {
         private readonly IPgHelper _pgHelper;
         private readonly ILogger<VendorService> _logger;
