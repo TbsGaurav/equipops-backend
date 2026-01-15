@@ -24,6 +24,9 @@ namespace EquipOps
             // Equipment
             services.AddScoped<IEquipmentCategoryService, EquipmentCategoryService>();
 
+            // Equipment Failure
+            services.AddScoped<IEquipmentFailureService, EquipmentFailureService>();
+
             // Organization
             services.AddScoped<IOrganizationService1, OrganizationService1>();
 
