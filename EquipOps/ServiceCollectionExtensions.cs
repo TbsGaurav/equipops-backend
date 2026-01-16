@@ -21,11 +21,12 @@ namespace EquipOps
             // Vendor
             services.AddScoped<IVendorService, VendorService>();
 
-            // Equipment
-            services.AddScoped<IEquipmentCategoryService, EquipmentCategoryService>();
+			// Dashboard Category
+			services.AddValidatorsFromAssemblyContaining<DashboardCategoryValidator>();
+			services.AddScoped<IDashboardCategoryService, DashboardCategoryService>();
 
-            // Organization
-            services.AddScoped<IOrganizationService1, OrganizationService1>();
+			// Organization
+			services.AddScoped<IOrganizationService1, OrganizationService1>();
 
             return services;
         }

@@ -19,4 +19,9 @@
     <ProjectReference Include="..\SettingService.Api\SettingService.Api.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Model\Entities\" />
+    <Folder Include="Model\Responses\" />
+  </ItemGroup>
+
 </Project>

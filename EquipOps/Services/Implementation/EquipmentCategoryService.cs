@@ -20,10 +20,8 @@ namespace EquipOps.Services.Implementation
             _logger = logger;
         }
 
-        /* -------------------------------------------------------------
-         * CREATE / UPDATE
-         * -------------------------------------------------------------*/
-        public async Task<IActionResult> EquipmentCategoryCreateAsync(EquipmentCategoryRequest request)
+		#region Create/Update EquipmentCategory
+		public async Task<IActionResult> EquipmentCategoryCreateAsync(EquipmentCategoryRequest request)
         {
             try
             {
@@ -62,11 +60,11 @@ namespace EquipOps.Services.Implementation
                 );
             }
         }
+		#endregion
 
-        /* -------------------------------------------------------------
-         * GET BY ID
-         * -------------------------------------------------------------*/
-        public async Task<IActionResult> EquipmentCategoryByIdAsync(int category_id)
+		#region  Get Equipment By Id
+
+		public async Task<IActionResult> EquipmentCategoryByIdAsync(int category_id)
         {
             try
             {
@@ -107,11 +105,11 @@ namespace EquipOps.Services.Implementation
                 );
             }
         }
+		#endregion
 
-        /* -------------------------------------------------------------
-         * DELETE
-         * -------------------------------------------------------------*/
-        public async Task<IActionResult> EquipmentCategoryDeleteAsync(int category_id)
+		#region Delete EquipmentCategory
+
+		public async Task<IActionResult> EquipmentCategoryDeleteAsync(int category_id)
         {
             try
             {
@@ -143,11 +141,11 @@ namespace EquipOps.Services.Implementation
                 );
             }
         }
+		#endregion
 
-        /* -------------------------------------------------------------
-         * LIST
-         * -------------------------------------------------------------*/
-        public async Task<IActionResult> EquipmentCategoryListAsync(
+		#region  Get EquipmentCategory List
+
+		public async Task<IActionResult> EquipmentCategoryListAsync(
             string? search,
             int length,
             int page,
@@ -202,5 +200,6 @@ namespace EquipOps.Services.Implementation
                 );
             }
         }
-    }
+		#endregion
+	}
 }
