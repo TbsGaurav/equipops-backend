@@ -18,6 +18,7 @@ namespace EquipOps.Services.Implementation
 		);
 
 		Task<IActionResult> DeleteAsync(int equipmentId);
-	}
+		Task<IActionResult> EquipmentDropdownAsync();
+    }
 
 }

@@ -128,5 +128,40 @@ namespace EquipOps.Services.Implementation
 					"Internal server error.", exception: ex, statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR));
 			}
 		}
-	}
+        public async Task<IActionResult> EquipmentDropdownAsync()
+        {
+            try
+            {
+                var param = new Dictionary<string, DbParam>
+        {
+            {
+                "ref",
+                new DbParam
+                {
+                    Value = "equipment_cursor",
+                    DbType = DbType.String,
+                    Direction = ParameterDirection.InputOutput
+                }
+            }
+        };
+
+                dynamic result = await _pgHelper.ListAsync("master.sp_equipment_dropdown", param);
+
+                var list = result.@ref as List<dynamic>;
+
+                return new OkObjectResult(ResponseHelper<dynamic>.Success("Equipment loaded.", list));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Equipment dropdown error");
+                return new ObjectResult(
+                    ResponseHelper<string>.Error(
+                        "Internal server error.",
+                        exception: ex,
+                        statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR
+                    )
+                );
+            }
+        }
+    }
 }

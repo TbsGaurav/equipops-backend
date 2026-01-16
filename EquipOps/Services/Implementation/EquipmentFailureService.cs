@@ -9,17 +9,8 @@ using System.Data;
 
 namespace EquipOps.Services.Implementation
 {
-    public class EquipmentFailureService : IEquipmentFailureService
+    public class EquipmentFailureService(IPgHelper pgHelper, ILogger<EquipmentFailureService> logger) : IEquipmentFailureService
     {
-        private readonly IPgHelper _pgHelper;
-        private readonly ILogger<EquipmentFailureService> _logger;
-
-        public EquipmentFailureService(IPgHelper pgHelper, ILogger<EquipmentFailureService> logger)
-        {
-            _pgHelper = pgHelper;
-            _logger = logger;
-        }
-
         public async Task<IActionResult> EquipmentFailureCreateAsync(EquipmentFailureRequest request)
         {
             try
@@ -38,10 +29,7 @@ namespace EquipOps.Services.Implementation
                     { "p_downtime_minutes", new DbParam { Value = request.downtime_minutes, DbType = DbType.Int32 } }
                 };
 
-                var result = await _pgHelper.CreateUpdateAsync(
-                    "master.sp_equipment_failure_create_update",
-                    param
-                );
+                var result = await pgHelper.CreateUpdateAsync("master.sp_equipment_failure_create_update",param);
 
                 string message = request.failure_id == null || request.failure_id == 0
                     ? "Equipment failure created successfully."
@@ -53,7 +41,7 @@ namespace EquipOps.Services.Implementation
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Equipment Failure save error");
+                logger.LogError(ex, "Equipment Failure save error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
                         "Internal server error.",
@@ -74,10 +62,7 @@ namespace EquipOps.Services.Implementation
                     { "ref", new DbParam { Value = "equipment_failure_by_id_cursor", DbType = DbType.String, Direction = ParameterDirection.InputOutput } }
                 };
 
-                dynamic result = await _pgHelper.ListAsync(
-                    "master.sp_equipment_failure_getbyid",
-                    param
-                );
+                dynamic result = await pgHelper.ListAsync("master.sp_equipment_failure_getbyid",param);
 
                 var list = result.@ref as List<dynamic>;
 
@@ -95,7 +80,7 @@ namespace EquipOps.Services.Implementation
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Get Equipment Failure error");
+                logger.LogError(ex, "Get Equipment Failure error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
                         "Internal server error.",
@@ -116,10 +101,7 @@ namespace EquipOps.Services.Implementation
                     { "p_failure_id", new DbParam { Value = failure_id, DbType = DbType.Int32 } }
                 };
 
-                var result = await _pgHelper.CreateUpdateAsync(
-                    "master.sp_equipment_failure_delete",
-                    param
-                );
+                var result = await pgHelper.CreateUpdateAsync("master.sp_equipment_failure_delete",param);
 
                 return new OkObjectResult(
                     ResponseHelper<dynamic>.Success("Equipment failure deleted successfully.", result)
@@ -127,7 +109,7 @@ namespace EquipOps.Services.Implementation
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Delete Equipment Failure error");
+                logger.LogError(ex, "Delete Equipment Failure error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
                         "Internal server error.",
@@ -138,12 +120,7 @@ namespace EquipOps.Services.Implementation
             }
         }
 
-        public async Task<IActionResult> EquipmentFailureListAsync(
-            string? search,
-            int length,
-            int page,
-            string orderColumn,
-            string orderDirection)
+        public async Task<IActionResult> EquipmentFailureListAsync(string? search,int length,int page,string orderColumn,string orderDirection)
         {
             try
             {
@@ -158,10 +135,7 @@ namespace EquipOps.Services.Implementation
                     { "ref", new DbParam { Value = "equipment_failure_cursor", DbType = DbType.String, Direction = ParameterDirection.InputOutput } }
                 };
 
-                dynamic result = await _pgHelper.ListAsync(
-                    "master.sp_equipment_failure_list",
-                    param
-                );
+                dynamic result = await pgHelper.ListAsync("master.sp_equipment_failure_list",param);
 
                 var list = result.@ref as List<dynamic>;
 
@@ -183,7 +157,7 @@ namespace EquipOps.Services.Implementation
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "List Equipment Failure error");
+                logger.LogError(ex, "List Equipment Failure error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
                         "Internal server error.",

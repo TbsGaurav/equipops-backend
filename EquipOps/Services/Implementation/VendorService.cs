@@ -9,17 +9,8 @@ using System.Data;
 
 namespace EquipOps.Services.Implementation
 {
-    public class VendorService : IVendorService
+    public class VendorService(IPgHelper pgHelper, ILogger<VendorService> logger) : IVendorService
     {
-        private readonly IPgHelper _pgHelper;
-        private readonly ILogger<VendorService> _logger;
-
-        public VendorService(IPgHelper pgHelper, ILogger<VendorService> logger)
-        {
-            _pgHelper = pgHelper;
-            _logger = logger;
-        }
-
         public async Task<IActionResult> VendorCreateAsync(VendorRequest request)
         {
             try
@@ -37,12 +28,12 @@ namespace EquipOps.Services.Implementation
                     { "p_return_updated_at", new DbParam { DbType = DbType.DateTime, Direction = ParameterDirection.InputOutput } }
                 };
 
-                var result = await _pgHelper.CreateUpdateAsync("master.sp_vendor_create_update", param);
+                var result = await pgHelper.CreateUpdateAsync("master.sp_vendor_create_update", param);
                 return new OkObjectResult(ResponseHelper<dynamic>.Success("Vendor saved successfully.", result));
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Vendor save error");
+                logger.LogError(ex, "Vendor save error");
                 return new ObjectResult(ResponseHelper<string>.Error(
                     "Internal server error.", exception: ex, statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR));
             }
@@ -58,7 +49,7 @@ namespace EquipOps.Services.Implementation
                     { "ref", new DbParam { Value = "vendor_by_id_cursor", DbType = DbType.String, Direction = ParameterDirection.InputOutput } }
                 };
 
-                dynamic result = await _pgHelper.ListAsync("master.sp_vendor_getbyid", param);
+                dynamic result = await pgHelper.ListAsync("master.sp_vendor_getbyid", param);
                 var list = result.@ref as List<dynamic>;
 
                 if (list == null || !list.Any())
@@ -68,7 +59,7 @@ namespace EquipOps.Services.Implementation
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Get Vendor error");
+                logger.LogError(ex, "Get Vendor error");
                 return new ObjectResult(ResponseHelper<string>.Error(
                     "Internal server error.", exception: ex, statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR));
             }
@@ -84,12 +75,12 @@ namespace EquipOps.Services.Implementation
                     { "p_return_vendor_id", new DbParam { DbType = DbType.Int32, Direction = ParameterDirection.InputOutput } }
                 };
 
-                var result = await _pgHelper.CreateUpdateAsync("master.sp_vendor_delete", param);
+                var result = await pgHelper.CreateUpdateAsync("master.sp_vendor_delete", param);
                 return new OkObjectResult(ResponseHelper<dynamic>.Success("Vendor deleted.", result));
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Delete Vendor error");
+                logger.LogError(ex, "Delete Vendor error");
                 return new ObjectResult(ResponseHelper<string>.Error(
                     "Internal server error.", exception: ex, statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR));
             }
@@ -110,7 +101,7 @@ namespace EquipOps.Services.Implementation
                     { "ref", new DbParam { Value = "vendor_cursor", DbType = DbType.String, Direction = ParameterDirection.InputOutput } }
                 };
 
-                dynamic result = await _pgHelper.ListAsync("master.sp_vendor_list", param);
+                dynamic result = await pgHelper.ListAsync("master.sp_vendor_list", param);
                 var list = result.@ref as List<dynamic>;
 
                 if (list == null || !list.Any())
@@ -124,7 +115,7 @@ namespace EquipOps.Services.Implementation
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "List Vendor error");
+                logger.LogError(ex, "List Vendor error");
                 return new ObjectResult(ResponseHelper<string>.Error(
                     "Internal server error.", exception: ex, statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR));
             }

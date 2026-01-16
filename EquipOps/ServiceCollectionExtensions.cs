@@ -30,6 +30,9 @@ namespace EquipOps
             // Organization
             services.AddScoped<IOrganizationService1, OrganizationService1>();
 
+            // Equipment Subparts
+            services.AddScoped<IEquipmentSubpartService, EquipmentSubpartService>();
+
             return services;
         }
     }

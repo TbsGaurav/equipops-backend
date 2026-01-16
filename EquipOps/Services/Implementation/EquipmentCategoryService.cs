@@ -9,17 +9,8 @@ using System.Data;
 
 namespace EquipOps.Services.Implementation
 {
-    public class EquipmentCategoryService : IEquipmentCategoryService
+    public class EquipmentCategoryService(IPgHelper pgHelper, ILogger<EquipmentCategoryService> logger) : IEquipmentCategoryService
     {
-        private readonly IPgHelper _pgHelper;
-        private readonly ILogger<EquipmentCategoryService> _logger;
-
-        public EquipmentCategoryService(IPgHelper pgHelper, ILogger<EquipmentCategoryService> logger)
-        {
-            _pgHelper = pgHelper;
-            _logger = logger;
-        }
-
         public async Task<IActionResult> EquipmentCategoryCreateAsync(EquipmentCategoryRequest request)
         {
             try
@@ -34,10 +25,7 @@ namespace EquipOps.Services.Implementation
                     { "p_description", new DbParam { Value = request.description, DbType = DbType.String } }
                 };
 
-                var result = await _pgHelper.CreateUpdateAsync(
-                    "master.sp_equipment_category_create_update",
-                    param
-                );
+                var result = await pgHelper.CreateUpdateAsync("master.sp_equipment_category_create_update",param);
 
                 string message = request.category_id == null || request.category_id == 0
                     ? "Equipment category created successfully."
@@ -49,7 +37,7 @@ namespace EquipOps.Services.Implementation
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Equipment Category save error");
+                logger.LogError(ex, "Equipment Category save error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
                         "Internal server error.",
@@ -70,10 +58,7 @@ namespace EquipOps.Services.Implementation
                     { "ref", new DbParam { Value = "equipment_category_by_id_cursor", DbType = DbType.String, Direction = ParameterDirection.InputOutput } }
                 };
 
-                dynamic result = await _pgHelper.ListAsync(
-                    "master.sp_equipment_category_getbyid",
-                    param
-                );
+                dynamic result = await pgHelper.ListAsync("master.sp_equipment_category_getbyid",param);
 
                 var list = result.@ref as List<dynamic>;
 
@@ -91,7 +76,7 @@ namespace EquipOps.Services.Implementation
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Get Equipment Category error");
+                logger.LogError(ex, "Get Equipment Category error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
                         "Internal server error.",
@@ -113,10 +98,7 @@ namespace EquipOps.Services.Implementation
                     { "p_category_id", new DbParam { Value = category_id, DbType = DbType.Int32 } }
                 };
 
-                var result = await _pgHelper.CreateUpdateAsync(
-                    "master.sp_equipment_category_delete",
-                    param
-                );
+                var result = await pgHelper.CreateUpdateAsync("master.sp_equipment_category_delete",param);
 
                 return new OkObjectResult(
                     ResponseHelper<dynamic>.Success("Equipment category deleted successfully.", result)
@@ -124,7 +106,7 @@ namespace EquipOps.Services.Implementation
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Delete Equipment Category error");
+                logger.LogError(ex, "Delete Equipment Category error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
                         "Internal server error.",
@@ -135,12 +117,7 @@ namespace EquipOps.Services.Implementation
             }
         }
 
-        public async Task<IActionResult> EquipmentCategoryListAsync(
-            string? search,
-            int length,
-            int page,
-            string orderColumn,
-            string orderDirection)
+        public async Task<IActionResult> EquipmentCategoryListAsync(string? search,int length,int page,string orderColumn,string orderDirection)
         {
             try
             {
@@ -155,10 +132,7 @@ namespace EquipOps.Services.Implementation
                     { "ref", new DbParam { Value = "equipment_category_cursor", DbType = DbType.String, Direction = ParameterDirection.InputOutput } }
                 };
 
-                dynamic result = await _pgHelper.ListAsync(
-                    "master.sp_equipment_category_list",
-                    param
-                );
+                dynamic result = await pgHelper.ListAsync("master.sp_equipment_category_list",param);
 
                 var list = result.@ref as List<dynamic>;
 
@@ -180,7 +154,7 @@ namespace EquipOps.Services.Implementation
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "List Equipment Category error");
+                logger.LogError(ex, "List Equipment Category error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
                         "Internal server error.",

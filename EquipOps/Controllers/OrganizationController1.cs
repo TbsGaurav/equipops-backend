@@ -44,5 +44,11 @@ namespace EquipOps.Controllers
             var result = await _organizationService.OrganizationDeleteAsync(request.organization_id);
             return Ok(result);
         }
+
+        [HttpGet("organization/dropdown")]
+        public async Task<IActionResult> OrganizationDropdown()
+        {
+            return await _organizationService.OrganizationDropdownAsync();
+        }
     }
 }

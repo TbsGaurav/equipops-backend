@@ -87,6 +87,11 @@ namespace EquipOps.API.Controller
 
 			return await _equipmentService.DeleteAsync(equipmentId);
 		}
-	}
 
+        [HttpGet("Dropdown")]
+        public async Task<IActionResult> EquipmentDropdown()
+        {
+            return await _equipmentService.EquipmentDropdownAsync();
+        }
+    }
 }

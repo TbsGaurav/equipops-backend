@@ -8,7 +8,7 @@ namespace EquipOps.Services.Interface
         Task<IActionResult> OrganizationCreateAsync(Organization1Request request);
         Task<IActionResult> OrganizationByIdAsync(int organization_id);
         Task<IActionResult> OrganizationDeleteAsync(int organization_id);
-        Task<IActionResult> OrganizationListAsync(string? search,int length,int page,string orderColumn,string orderDirection
-        );
+        Task<IActionResult> OrganizationListAsync(string? search,int length,int page,string orderColumn,string orderDirection);
+        Task<IActionResult> OrganizationDropdownAsync();
     }
 }
