@@ -142,6 +142,10 @@ namespace EquipOps.Services.Implementation
 					"Internal server error.", exception: ex, statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR));
 			}
 		}
+
+        #endregion
+
+        #region Equipment Dropdown
         public async Task<IActionResult> EquipmentDropdownAsync()
         {
             try
@@ -177,5 +181,6 @@ namespace EquipOps.Services.Implementation
                 );
             }
         }
+        #endregion
     }
 }

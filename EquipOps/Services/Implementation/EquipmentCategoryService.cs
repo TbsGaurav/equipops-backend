@@ -11,6 +11,8 @@ namespace EquipOps.Services.Implementation
 {
     public class EquipmentCategoryService(IPgHelper pgHelper, ILogger<EquipmentCategoryService> logger) : IEquipmentCategoryService
     {
+
+        #region  Create Upadate Equipment Category
         public async Task<IActionResult> EquipmentCategoryCreateAsync(EquipmentCategoryRequest request)
         {
             try
@@ -47,9 +49,9 @@ namespace EquipOps.Services.Implementation
                 );
             }
         }
-		#endregion
+        #endregion
 
-		#region  Get Equipment By Id
+        #region  Get Equipment By Id
 
         public async Task<IActionResult> EquipmentCategoryByIdAsync(int category_id)
         {
@@ -89,7 +91,9 @@ namespace EquipOps.Services.Implementation
                 );
             }
         }
-		#endregion
+        #endregion
+
+        #region  Equipment Category Delete
 
         public async Task<IActionResult> EquipmentCategoryDeleteAsync(int category_id)
         {
@@ -120,7 +124,9 @@ namespace EquipOps.Services.Implementation
                 );
             }
         }
-		#endregion
+        #endregion
+
+        #region  Equipment Category List
 
         public async Task<IActionResult> EquipmentCategoryListAsync(string? search,int length,int page,string orderColumn,string orderDirection)
         {
