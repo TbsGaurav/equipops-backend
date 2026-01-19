@@ -1,4 +1,5 @@
-﻿using CommonHelper.Enums;
+﻿using CommonHelper.constants;
+using CommonHelper.Enums;
 using CommonHelper.Helper;
 using CommonHelper.Helpers;
 using CommonHelper.ResponseHelpers.Handlers;
@@ -40,7 +41,7 @@ namespace EquipOps.Services.Implementation
 			{
 				_logger.LogError(ex, "Dashboard category save error");
 				return new ObjectResult(ResponseHelper<string>.Error(
-					"Internal server error.", exception: ex, statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR));
+                    ConstantMessages.InternalServerErrorMessage, exception: ex, statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR));
 			}
 		}
 
@@ -66,7 +67,7 @@ namespace EquipOps.Services.Implementation
 			{
 				_logger.LogError(ex, "Get dashboard category error");
 				return new ObjectResult(ResponseHelper<string>.Error(
-					"Internal server error.", exception: ex, statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR));
+                    ConstantMessages.InternalServerErrorMessage, exception: ex, statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR));
 			}
 		}
 
@@ -101,7 +102,7 @@ namespace EquipOps.Services.Implementation
 			{
 				_logger.LogError(ex, "List dashboard category error");
 				return new ObjectResult(ResponseHelper<string>.Error(
-					"Internal server error.", exception: ex, statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR));
+                    ConstantMessages.InternalServerErrorMessage, exception: ex, statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR));
 			}
 		}
 
@@ -121,7 +122,7 @@ namespace EquipOps.Services.Implementation
 			{
 				_logger.LogError(ex, "Delete dashboard category error");
 				return new ObjectResult(ResponseHelper<string>.Error(
-					"Internal server error.", exception: ex, statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR));
+					ConstantMessages.InternalServerErrorMessage, exception: ex, statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR));
 			}
 		}
 	}

@@ -1,4 +1,5 @@
-﻿using CommonHelper.Enums;
+﻿using CommonHelper.constants;
+using CommonHelper.Enums;
 using CommonHelper.Helper;
 using CommonHelper.Helpers;
 using CommonHelper.ResponseHelpers.Handlers;
@@ -39,7 +40,7 @@ namespace EquipOps.Services.Implementation
                 logger.LogError(ex, "Organization save error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
-                        "Internal server error.",
+                        ConstantMessages.InternalServerErrorMessage,
                         exception: ex,
                         statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR
                     )
@@ -70,7 +71,7 @@ namespace EquipOps.Services.Implementation
                     );
 
                 return new OkObjectResult(
-                    ResponseHelper<dynamic>.Success("Organization found.", list.First())
+                    ResponseHelper<dynamic>.Success("Organization found.", list[0])
                 );
             }
             catch (Exception ex)
@@ -78,7 +79,7 @@ namespace EquipOps.Services.Implementation
                 logger.LogError(ex, "Get Organization error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
-                        "Internal server error.",
+                        ConstantMessages.InternalServerErrorMessage,
                         exception: ex,
                         statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR
                     )
@@ -108,7 +109,7 @@ namespace EquipOps.Services.Implementation
                 logger.LogError(ex, "Delete Organization error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
-                        "Internal server error.",
+                        ConstantMessages.InternalServerErrorMessage,
                         exception: ex,
                         statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR
                     )
@@ -156,7 +157,7 @@ namespace EquipOps.Services.Implementation
                 logger.LogError(ex, "List Organization error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
-                        "Internal server error.",
+                        ConstantMessages.InternalServerErrorMessage,
                         exception: ex,
                         statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR
                     )
@@ -182,7 +183,7 @@ namespace EquipOps.Services.Implementation
 
                 dynamic result = await pgHelper.ListAsync("master.sp_organization_dropdown",param);
 
-                var list = result.@ref as List<dynamic>;
+                var list = result?.@ref as List<dynamic> ?? new List<dynamic>();
 
                 return new OkObjectResult(ResponseHelper<dynamic>.Success("Organizations loaded.", list));
             }
@@ -191,7 +192,7 @@ namespace EquipOps.Services.Implementation
                 logger.LogError(ex, "Organization dropdown error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
-                        "Internal server error.",
+                        ConstantMessages.InternalServerErrorMessage,
                         exception: ex,
                         statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR
                     )

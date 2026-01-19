@@ -1,4 +1,5 @@
-﻿using CommonHelper.Helper;
+﻿using CommonHelper.constants;
+using CommonHelper.Helper;
 using CommonHelper.Helpers;
 using CommonHelper.ResponseHelpers.Handlers;
 using EquipOps.Model.AuditLog;
@@ -38,7 +39,7 @@ namespace EquipOps.Services.Implementation
             {
                 logger.LogError(ex, "Audit log save error");
                 return new ObjectResult(
-                    ResponseHelper<string>.Error("Internal server error.", exception: ex)
+                    ResponseHelper<string>.Error(ConstantMessages.InternalServerErrorMessage, exception: ex)
                 );
             }
         }
@@ -63,14 +64,14 @@ namespace EquipOps.Services.Implementation
                     );
 
                 return new OkObjectResult(
-                    ResponseHelper<dynamic>.Success("Audit log found.", list.First())
+                    ResponseHelper<dynamic>.Success("Audit log found.", list[0])
                 );
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, "Get Audit log error");
                 return new ObjectResult(
-                    ResponseHelper<string>.Error("Internal server error.", exception: ex)
+                    ResponseHelper<string>.Error(ConstantMessages.InternalServerErrorMessage, exception: ex)
                 );
             }
         }
@@ -111,7 +112,7 @@ namespace EquipOps.Services.Implementation
             {
                 logger.LogError(ex, "List Audit logs error");
                 return new ObjectResult(
-                    ResponseHelper<string>.Error("Internal server error.", exception: ex)
+                    ResponseHelper<string>.Error(ConstantMessages.InternalServerErrorMessage, exception: ex)
                 );
             }
         }

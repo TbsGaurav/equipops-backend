@@ -1,4 +1,5 @@
-﻿using CommonHelper.Enums;
+﻿using CommonHelper.constants;
+using CommonHelper.Enums;
 using CommonHelper.Helper;
 using CommonHelper.Helpers;
 using CommonHelper.ResponseHelpers.Handlers;
@@ -44,7 +45,7 @@ namespace EquipOps.Services.Implementation
                 logger.LogError(ex, "Equipment Failure save error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
-                        "Internal server error.",
+                        ConstantMessages.InternalServerErrorMessage,
                         exception: ex,
                         statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR
                     )
@@ -75,7 +76,7 @@ namespace EquipOps.Services.Implementation
                     );
 
                 return new OkObjectResult(
-                    ResponseHelper<dynamic>.Success("Equipment failure found.", list.First())
+                    ResponseHelper<dynamic>.Success("Equipment failure found.", list[0])
                 );
             }
             catch (Exception ex)
@@ -83,7 +84,7 @@ namespace EquipOps.Services.Implementation
                 logger.LogError(ex, "Get Equipment Failure error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
-                        "Internal server error.",
+                        ConstantMessages.InternalServerErrorMessage,
                         exception: ex,
                         statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR
                     )
@@ -112,7 +113,7 @@ namespace EquipOps.Services.Implementation
                 logger.LogError(ex, "Delete Equipment Failure error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
-                        "Internal server error.",
+                        ConstantMessages.InternalServerErrorMessage,
                         exception: ex,
                         statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR
                     )
@@ -160,7 +161,7 @@ namespace EquipOps.Services.Implementation
                 logger.LogError(ex, "List Equipment Failure error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
-                        "Internal server error.",
+                        ConstantMessages.InternalServerErrorMessage,
                         exception: ex,
                         statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR
                     )

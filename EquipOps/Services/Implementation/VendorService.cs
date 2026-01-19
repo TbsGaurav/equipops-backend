@@ -1,4 +1,5 @@
-﻿using CommonHelper.Enums;
+﻿using CommonHelper.constants;
+using CommonHelper.Enums;
 using CommonHelper.Helper;
 using CommonHelper.Helpers;
 using CommonHelper.ResponseHelpers.Handlers;
@@ -35,7 +36,7 @@ namespace EquipOps.Services.Implementation
             {
                 logger.LogError(ex, "Vendor save error");
                 return new ObjectResult(ResponseHelper<string>.Error(
-                    "Internal server error.", exception: ex, statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR));
+                    ConstantMessages.InternalServerErrorMessage, exception: ex, statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR));
             }
         }
 
@@ -55,13 +56,13 @@ namespace EquipOps.Services.Implementation
                 if (list == null || !list.Any())
                     return new NotFoundObjectResult(ResponseHelper<string>.Error("Vendor not found.", statusCode: StatusCodeEnum.NOT_FOUND));
 
-                return new OkObjectResult(ResponseHelper<dynamic>.Success("Vendor found.", list.First()));
+                return new OkObjectResult(ResponseHelper<dynamic>.Success("Vendor found.", list[0]));
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, "Get Vendor error");
                 return new ObjectResult(ResponseHelper<string>.Error(
-                    "Internal server error.", exception: ex, statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR));
+                    ConstantMessages.InternalServerErrorMessage, exception: ex, statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR));
             }
         }
 
@@ -82,7 +83,7 @@ namespace EquipOps.Services.Implementation
             {
                 logger.LogError(ex, "Delete Vendor error");
                 return new ObjectResult(ResponseHelper<string>.Error(
-                    "Internal server error.", exception: ex, statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR));
+                    ConstantMessages.InternalServerErrorMessage, exception: ex, statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR));
             }
         }
 
@@ -117,7 +118,7 @@ namespace EquipOps.Services.Implementation
             {
                 logger.LogError(ex, "List Vendor error");
                 return new ObjectResult(ResponseHelper<string>.Error(
-                    "Internal server error.", exception: ex, statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR));
+                    ConstantMessages.InternalServerErrorMessage, exception: ex, statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR));
             }
         }
     }

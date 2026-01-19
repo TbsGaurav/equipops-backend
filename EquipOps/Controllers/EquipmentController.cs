@@ -50,7 +50,7 @@ namespace EquipOps.API.Controller
         [HttpGet("Dropdown")]
         public async Task<IActionResult> EquipmentDropdown()
         {
-            return await _equipmentService.EquipmentDropdownAsync();
+            return await equipmentService.EquipmentDropdownAsync();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using CommonHelper.Enums;
+﻿using CommonHelper.constants;
+using CommonHelper.Enums;
 using CommonHelper.Helper;
 using CommonHelper.Helpers;
 using CommonHelper.ResponseHelpers.Handlers;
@@ -45,7 +46,7 @@ namespace EquipOps.Services.Implementation
                 logger.LogError(ex, "Equipment Subpart save error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
-                        "Internal server error.",
+                        ConstantMessages.InternalServerErrorMessage,
                         exception: ex,
                         statusCode: CommonHelper.Enums.StatusCodeEnum.INTERNAL_SERVER_ERROR
                     )
@@ -76,7 +77,7 @@ namespace EquipOps.Services.Implementation
                     );
 
                 return new OkObjectResult(
-                    ResponseHelper<dynamic>.Success("Equipment subpart found.", list.First())
+                    ResponseHelper<dynamic>.Success("Equipment subpart found.", list[0])
                 );
             }
             catch (Exception ex)
@@ -84,7 +85,7 @@ namespace EquipOps.Services.Implementation
                 logger.LogError(ex, "Get Equipment Subpart error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
-                        "Internal server error.",
+                        ConstantMessages.InternalServerErrorMessage,
                         exception: ex,
                         statusCode: CommonHelper.Enums.StatusCodeEnum.INTERNAL_SERVER_ERROR
                     )
@@ -116,7 +117,7 @@ namespace EquipOps.Services.Implementation
                 logger.LogError(ex, "Delete Equipment Subpart error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
-                        "Internal server error.",
+                        ConstantMessages.InternalServerErrorMessage,
                         exception: ex,
                         statusCode:CommonHelper.Enums.StatusCodeEnum.INTERNAL_SERVER_ERROR
                     )
@@ -165,7 +166,7 @@ namespace EquipOps.Services.Implementation
                 logger.LogError(ex, "List Equipment Subpart error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
-                        "Internal server error.",
+                        ConstantMessages.InternalServerErrorMessage,
                         exception: ex,
                         statusCode: CommonHelper.Enums.StatusCodeEnum.INTERNAL_SERVER_ERROR
                     )
@@ -191,7 +192,7 @@ namespace EquipOps.Services.Implementation
 
                 dynamic result = await pgHelper.ListAsync("master.sp_equipment_subpart_dropdown", param);
 
-                var list = result.@ref as List<dynamic>;
+                var list = result?.@ref as List<dynamic> ?? new List<dynamic>();
 
                 return new OkObjectResult(ResponseHelper<dynamic>.Success("Subparts loaded.", list));
             }
@@ -200,7 +201,7 @@ namespace EquipOps.Services.Implementation
                 logger.LogError(ex, "Equipment subpart dropdown error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
-                        "Internal server error.",
+                        ConstantMessages.InternalServerErrorMessage,
                         exception: ex,
                         statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR
                     )

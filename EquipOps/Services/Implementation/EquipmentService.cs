@@ -1,4 +1,5 @@
-﻿using CommonHelper.Enums;
+﻿using CommonHelper.constants;
+using CommonHelper.Enums;
 using CommonHelper.Helper;
 using CommonHelper.Helpers;
 using CommonHelper.ResponseHelpers.Handlers;
@@ -8,19 +9,10 @@ using System.Data;
 
 namespace EquipOps.Services.Implementation
 {
-	public sealed class EquipmentService : IEquipmentService
+	public sealed class EquipmentService(IPgHelper pgHelper, ILogger<EquipmentService> logger) : IEquipmentService
 	{
-		private readonly IPgHelper _pgHelper;
-		private readonly ILogger<EquipmentService> _logger;
-
-		public EquipmentService(IPgHelper pgHelper, ILogger<EquipmentService> logger)
-		{
-			_pgHelper = pgHelper;
-			_logger = logger;
-		}
-
-		#region Create/Update Equipment
-		public async Task<IActionResult> AddOrUpdateAsync(EquipmentRequest request)
+        #region Create/Update Equipment
+        public async Task<IActionResult> AddOrUpdateAsync(EquipmentRequest request)
 		{
 			try
 			{
@@ -36,7 +28,7 @@ namespace EquipOps.Services.Implementation
 		        	{ "p_purchase_date",  new DbParam { Value = (object?)request.PurchaseDate?.Date ?? DBNull.Value, DbType = DbType.Date } },
 		        	{ "p_status",         new DbParam { Value = request.Status,        DbType = DbType.Int32 } }
 		        };
-				var result = await _pgHelper.CreateUpdateAsync(
+				var result = await pgHelper.CreateUpdateAsync(
 					"master.sp_equipment_add_update",
 					param
 				);
@@ -46,10 +38,10 @@ namespace EquipOps.Services.Implementation
 			}
 			catch (Exception ex)
 			{
-				_logger.LogError(ex, "Equipment save error");
+				logger.LogError(ex, "Equipment save error");
 				return new ObjectResult(
 					ResponseHelper<string>.Error(
-						"Internal server error.",
+                        ConstantMessages.InternalServerErrorMessage,
 						exception: ex,
 						statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR
 					)
@@ -69,19 +61,19 @@ namespace EquipOps.Services.Implementation
 					{ "ref", new DbParam { Value = "equipment_by_id_cursor", DbType = DbType.String, Direction = ParameterDirection.InputOutput } }
 				};
 
-				dynamic result = await _pgHelper.ListAsync("master.sp_equipment_get_by_id", param);
+				dynamic result = await pgHelper.ListAsync("master.sp_equipment_get_by_id", param);
 				var list = result.@ref as List<dynamic>;
 
 				if (list == null || !list.Any())
 					return new NotFoundObjectResult(ResponseHelper<string>.Error("Equipment not found.", statusCode: StatusCodeEnum.NOT_FOUND));
 
-				return new OkObjectResult(ResponseHelper<dynamic>.Success("Equipment found.", list.First()));
+				return new OkObjectResult(ResponseHelper<dynamic>.Success("Equipment found.", list[0]));
 			}
 			catch (Exception ex)
 			{
-				_logger.LogError(ex, "Get Equipment error");
+				logger.LogError(ex, "Get Equipment error");
 				return new ObjectResult(ResponseHelper<string>.Error(
-					"Internal server error.", exception: ex, statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR));
+					ConstantMessages.InternalServerErrorMessage, exception: ex, statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR));
 			}
 		}
 		#endregion
@@ -98,11 +90,11 @@ namespace EquipOps.Services.Implementation
 		        	{ "p_page", new DbParam { Value = page, DbType = DbType.Int32 } },
 		        	{ "p_order_column", new DbParam { Value = orderColumn, DbType = DbType.String } },
 		        	{ "p_order_direction", new DbParam { Value = orderDirection, DbType = DbType.String } },
-		        	{ "p_is_active", new DbParam { Value = isActive ?? -1, DbType = DbType.Int32 } }, // -1,0,1
+		        	{ "p_is_active", new DbParam { Value = isActive ?? -1, DbType = DbType.Int32 } }, 
                     { "o_total_numbers", new DbParam { DbType = DbType.Int32, Direction = ParameterDirection.InputOutput } },
 		        	{ "ref", new DbParam { Value = "equipment_cursor", DbType = DbType.String, Direction = ParameterDirection.InputOutput } }
 		        };
-				dynamic result = await _pgHelper.ListAsync("master.sp_equipment_list_get", param);
+				dynamic result = await pgHelper.ListAsync("master.sp_equipment_list_get", param);
 				var list = result.@ref as List<dynamic>;
 				if (list == null || !list.Any())
 					return new NotFoundObjectResult(ResponseHelper<string>.Error("No equipment found."));
@@ -115,9 +107,9 @@ namespace EquipOps.Services.Implementation
 			}
 			catch (Exception ex)
 			{
-				_logger.LogError(ex, "List Equipment error");
+				logger.LogError(ex, "List Equipment error");
 				return new ObjectResult(ResponseHelper<string>.Error(
-					"Internal server error.", exception: ex));
+					ConstantMessages.InternalServerErrorMessage, exception: ex));
 			}
 		}
 		#endregion
@@ -132,14 +124,14 @@ namespace EquipOps.Services.Implementation
 					{ "p_equipment_id", new DbParam { Value = equipmentId, DbType = DbType.Int32 } }
 				};
 
-				await _pgHelper.CreateUpdateAsync("master.sp_equipment_delete", param);
+				await pgHelper.CreateUpdateAsync("master.sp_equipment_delete", param);
 				return new OkObjectResult(ResponseHelper<bool>.Success("Equipment deleted.", true));
 			}
 			catch (Exception ex)
 			{
-				_logger.LogError(ex, "Delete Equipment error");
+				logger.LogError(ex, "Delete Equipment error");
 				return new ObjectResult(ResponseHelper<string>.Error(
-					"Internal server error.", exception: ex, statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR));
+					ConstantMessages.InternalServerErrorMessage, exception: ex, statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR));
 			}
 		}
 
@@ -163,18 +155,18 @@ namespace EquipOps.Services.Implementation
             }
         };
 
-                dynamic result = await _pgHelper.ListAsync("master.sp_equipment_dropdown", param);
+                dynamic result = await pgHelper.ListAsync("master.sp_equipment_dropdown", param);
 
-                var list = result.@ref as List<dynamic>;
+                var list = result?.@ref as List<dynamic> ?? new List<dynamic>();
 
                 return new OkObjectResult(ResponseHelper<dynamic>.Success("Equipment loaded.", list));
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Equipment dropdown error");
+                logger.LogError(ex, "Equipment dropdown error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
-                        "Internal server error.",
+                        ConstantMessages.InternalServerErrorMessage,
                         exception: ex,
                         statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR
                     )
