@@ -12,6 +12,8 @@ namespace EquipOps.Services.Implementation
 {
     public class EquipmentSubpartService(IPgHelper pgHelper, ILogger<EquipmentSubpartService> logger) : IEquipmentSubpartService
     {
+        #region Create/Update EquipmentSubpart
+
         public async Task<IActionResult> EquipmentSubpartCreateUpdateAsync(EquipmentSubpartRequest request)
         {
             try
@@ -50,6 +52,9 @@ namespace EquipOps.Services.Implementation
                 );
             }
         }
+        #endregion
+
+        #region  EquipmentSubpart Bet By Id
 
         public async Task<IActionResult> EquipmentSubpartByIdAsync(int subpart_id)
         {
@@ -86,35 +91,9 @@ namespace EquipOps.Services.Implementation
                 );
             }
         }
+        #endregion
 
-        public async Task<IActionResult> EquipmentSubpartDeleteAsync(int subpart_id)
-        {
-            try
-            {
-                var param = new Dictionary<string, DbParam>
-                {
-                    { "p_return_subpart_id", new DbParam { DbType = DbType.Int32, Direction = ParameterDirection.InputOutput } },
-                    { "p_subpart_id", new DbParam { Value = subpart_id, DbType = DbType.Int32 } }
-                };
-
-                var result = await pgHelper.CreateUpdateAsync("master.sp_equipment_subpart_delete",param);
-
-                return new OkObjectResult(
-                    ResponseHelper<dynamic>.Success("Equipment subpart deleted successfully.", result)
-                );
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "Delete Equipment Subpart error");
-                return new ObjectResult(
-                    ResponseHelper<string>.Error(
-                        ConstantMessages.InternalServerErrorMessage,
-                        exception: ex,
-                        statusCode:CommonHelper.Enums.StatusCodeEnum.INTERNAL_SERVER_ERROR
-                    )
-                );
-            }
-        }
+        #region EquipmentSubpart List
 
         public async Task<IActionResult> EquipmentSubpartListAsync(string? search, bool? status, int length,int page,string orderColumn,string orderDirection)
         {
@@ -156,6 +135,41 @@ namespace EquipOps.Services.Implementation
                 );
             }
         }
+        #endregion
+
+        #region Delete EquipmentSubpart
+        public async Task<IActionResult> EquipmentSubpartDeleteAsync(int subpart_id)
+        {
+            try
+            {
+                var param = new Dictionary<string, DbParam>
+                {
+                    { "p_return_subpart_id", new DbParam { DbType = DbType.Int32, Direction = ParameterDirection.InputOutput } },
+                    { "p_subpart_id", new DbParam { Value = subpart_id, DbType = DbType.Int32 } }
+                };
+
+                var result = await pgHelper.CreateUpdateAsync("master.sp_equipment_subpart_delete", param);
+
+                return new OkObjectResult(
+                    ResponseHelper<dynamic>.Success("Equipment subpart deleted successfully.", result)
+                );
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Delete Equipment Subpart error");
+                return new ObjectResult(
+                    ResponseHelper<string>.Error(
+                        ConstantMessages.InternalServerErrorMessage,
+                        exception: ex,
+                        statusCode: CommonHelper.Enums.StatusCodeEnum.INTERNAL_SERVER_ERROR
+                    )
+                );
+            }
+        }
+        #endregion
+
+        #region EquipmentSubpart Dropdown
+
         public async Task<IActionResult> EquipmentSubpartDropdownAsync()
         {
             try
@@ -191,5 +205,6 @@ namespace EquipOps.Services.Implementation
                 );
             }
         }
+        #endregion
     }
 }

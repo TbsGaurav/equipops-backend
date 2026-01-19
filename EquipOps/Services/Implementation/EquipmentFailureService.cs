@@ -12,6 +12,8 @@ namespace EquipOps.Services.Implementation
 {
     public class EquipmentFailureService(IPgHelper pgHelper, ILogger<EquipmentFailureService> logger) : IEquipmentFailureService
     {
+        #region Create/Update Equipment Failure
+
         public async Task<IActionResult> EquipmentFailureCreateAsync(EquipmentFailureRequest request)
         {
             try
@@ -52,6 +54,9 @@ namespace EquipOps.Services.Implementation
                 );
             }
         }
+        #endregion
+
+        #region Equipment Failure Get By Id
 
         public async Task<IActionResult> EquipmentFailureByIdAsync(int failure_id)
         {
@@ -91,37 +96,11 @@ namespace EquipOps.Services.Implementation
                 );
             }
         }
+        #endregion
 
-        public async Task<IActionResult> EquipmentFailureDeleteAsync(int failure_id)
-        {
-            try
-            {
-                var param = new Dictionary<string, DbParam>
-                {
-                    { "p_return_failure_id", new DbParam { DbType = DbType.Int32, Direction = ParameterDirection.InputOutput } },
-                    { "p_failure_id", new DbParam { Value = failure_id, DbType = DbType.Int32 } }
-                };
+        #region Equipment Failure
 
-                var result = await pgHelper.CreateUpdateAsync("master.sp_equipment_failure_delete",param);
-
-                return new OkObjectResult(
-                    ResponseHelper<dynamic>.Success("Equipment failure deleted successfully.", result)
-                );
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "Delete Equipment Failure error");
-                return new ObjectResult(
-                    ResponseHelper<string>.Error(
-                        ConstantMessages.InternalServerErrorMessage,
-                        exception: ex,
-                        statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR
-                    )
-                );
-            }
-        }
-
-        public async Task<IActionResult> EquipmentFailureListAsync(string? search,int length,int page,string orderColumn,string orderDirection)
+        public async Task<IActionResult> EquipmentFailureListAsync(string? search, int length, int page, string orderColumn, string orderDirection)
         {
             try
             {
@@ -136,7 +115,7 @@ namespace EquipOps.Services.Implementation
                     { "ref", new DbParam { Value = "equipment_failure_cursor", DbType = DbType.String, Direction = ParameterDirection.InputOutput } }
                 };
 
-                dynamic result = await pgHelper.ListAsync("master.sp_equipment_failure_list",param);
+                dynamic result = await pgHelper.ListAsync("master.sp_equipment_failure_list", param);
 
                 var list = result.@ref as List<dynamic>;
 
@@ -168,5 +147,38 @@ namespace EquipOps.Services.Implementation
                 );
             }
         }
+        #endregion
+
+        #region Equipment Failure Delete
+
+        public async Task<IActionResult> EquipmentFailureDeleteAsync(int failure_id)
+        {
+            try
+            {
+                var param = new Dictionary<string, DbParam>
+                {
+                    { "p_return_failure_id", new DbParam { DbType = DbType.Int32, Direction = ParameterDirection.InputOutput } },
+                    { "p_failure_id", new DbParam { Value = failure_id, DbType = DbType.Int32 } }
+                };
+
+                var result = await pgHelper.CreateUpdateAsync("master.sp_equipment_failure_delete",param);
+
+                return new OkObjectResult(
+                    ResponseHelper<dynamic>.Success("Equipment failure deleted successfully.", result)
+                );
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Delete Equipment Failure error");
+                return new ObjectResult(
+                    ResponseHelper<string>.Error(
+                        ConstantMessages.InternalServerErrorMessage,
+                        exception: ex,
+                        statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR
+                    )
+                );
+            }
+        }
+        #endregion
     }
 }

@@ -52,7 +52,7 @@ namespace EquipOps.Services.Implementation
         }
         #endregion
 
-        #region  Get Equipment By Id
+        #region  Get Equipment Category By Id
 
         public async Task<IActionResult> EquipmentCategoryByIdAsync(int category_id)
         {
@@ -83,39 +83,6 @@ namespace EquipOps.Services.Implementation
             catch (Exception ex)
             {
                 logger.LogError(ex, "Get Equipment Category error");
-                return new ObjectResult(
-                    ResponseHelper<string>.Error(
-                        ConstantMessages.InternalServerErrorMessage,
-                        exception: ex,
-                        statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR
-                    )
-                );
-            }
-        }
-        #endregion
-
-        #region  Equipment Category Delete
-
-        public async Task<IActionResult> EquipmentCategoryDeleteAsync(int category_id)
-        {
-            try
-            {
-                var param = new Dictionary<string, DbParam>
-                {
-                    { "p_return_category_id", new DbParam { DbType = DbType.Int32, Direction = ParameterDirection.InputOutput } },
-                    { "p_return_updated_at", new DbParam { DbType = DbType.DateTime, Direction = ParameterDirection.InputOutput } },
-                    { "p_category_id", new DbParam { Value = category_id, DbType = DbType.Int32 } }
-                };
-
-                var result = await pgHelper.CreateUpdateAsync("master.sp_equipment_category_delete",param);
-
-                return new OkObjectResult(
-                    ResponseHelper<dynamic>.Success("Equipment category deleted successfully.", result)
-                );
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "Delete Equipment Category error");
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
                         ConstantMessages.InternalServerErrorMessage,
@@ -176,6 +143,39 @@ namespace EquipOps.Services.Implementation
                 );
             }
         }
-		#endregion
-	}
+        #endregion
+
+        #region  Equipment Category Delete
+
+        public async Task<IActionResult> EquipmentCategoryDeleteAsync(int category_id)
+        {
+            try
+            {
+                var param = new Dictionary<string, DbParam>
+                {
+                    { "p_return_category_id", new DbParam { DbType = DbType.Int32, Direction = ParameterDirection.InputOutput } },
+                    { "p_return_updated_at", new DbParam { DbType = DbType.DateTime, Direction = ParameterDirection.InputOutput } },
+                    { "p_category_id", new DbParam { Value = category_id, DbType = DbType.Int32 } }
+                };
+
+                var result = await pgHelper.CreateUpdateAsync("master.sp_equipment_category_delete", param);
+
+                return new OkObjectResult(
+                    ResponseHelper<dynamic>.Success("Equipment category deleted successfully.", result)
+                );
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Delete Equipment Category error");
+                return new ObjectResult(
+                    ResponseHelper<string>.Error(
+                        ConstantMessages.InternalServerErrorMessage,
+                        exception: ex,
+                        statusCode: StatusCodeEnum.INTERNAL_SERVER_ERROR
+                    )
+                );
+            }
+        }
+        #endregion
+    }
 }

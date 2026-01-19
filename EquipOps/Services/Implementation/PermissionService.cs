@@ -10,7 +10,9 @@ using System.Data;
 namespace EquipOps.Services.Implementation
 {
     public class PermissionService (IPgHelper pgHelper, ILogger<PermissionService> logger) : IPermissionService
-    {
+    {        
+        #region Create/Update Permission
+
         public async Task<dynamic> PermissionCreateUpdateAsync(PermissionRequest request)
         {
             try
@@ -38,7 +40,9 @@ namespace EquipOps.Services.Implementation
                 return ResponseHelper<string>.Error(ConstantMessages.InternalServerErrorMessage, exception: ex);
             }
         }
+        #endregion
 
+        #region Permission Get By Id
         public async Task<dynamic> PermissionByIdAsync(int permission_id)
         {
             try
@@ -64,6 +68,9 @@ namespace EquipOps.Services.Implementation
                 return ResponseHelper<string>.Error(ConstantMessages.InternalServerErrorMessage, exception: ex);
             }
         }
+        #endregion
+
+        #region Permission List
 
         public async Task<IActionResult> PermissionListAsync(string? search,bool? status,int length,int page,string orderColumn,string orderDirection)
         {
@@ -105,7 +112,10 @@ namespace EquipOps.Services.Implementation
                 );
             }
         }
+        #endregion
 
+        #region Permission Delete
+         
         public async Task<dynamic> PermissionDeleteAsync(int permission_id)
         {
             try
@@ -125,5 +135,6 @@ namespace EquipOps.Services.Implementation
                 return ResponseHelper<string>.Error(ConstantMessages.InternalServerErrorMessage, exception: ex);
             }
         }
+        #endregion
     }
 }
