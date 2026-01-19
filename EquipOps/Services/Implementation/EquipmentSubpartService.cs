@@ -23,7 +23,7 @@ namespace EquipOps.Services.Implementation
                     { "p_equipment_id", new DbParam { Value = request.equipment_id, DbType = DbType.Int32 } },
                     { "p_subpart_name", new DbParam { Value = request.subpart_name, DbType = DbType.String } },
                     { "p_description", new DbParam { Value = request.description, DbType = DbType.String } },
-                    { "p_status", new DbParam { Value = request.status, DbType = DbType.String } },
+                    { "p_status", new DbParam { Value = request.status, DbType = DbType.Boolean } },
                     { "p_qr_code", new DbParam { Value = request.qr_code, DbType = DbType.String } }
                 };
 
@@ -124,13 +124,14 @@ namespace EquipOps.Services.Implementation
             }
         }
 
-        public async Task<IActionResult> EquipmentSubpartListAsync(string? search,int length,int page,string orderColumn,string orderDirection)
+        public async Task<IActionResult> EquipmentSubpartListAsync(string? search, bool? status, int length,int page,string orderColumn,string orderDirection)
         {
             try
             {
                 var param = new Dictionary<string, DbParam>
                 {
                     { "p_search", new DbParam { Value = search, DbType = DbType.String } },
+                    { "p_status", new DbParam { Value = status, DbType = DbType.Boolean } },
                     { "p_length", new DbParam { Value = length, DbType = DbType.Int32 } },
                     { "p_page", new DbParam { Value = page, DbType = DbType.Int32 } },
                     { "p_order_column", new DbParam { Value = orderColumn, DbType = DbType.String } },

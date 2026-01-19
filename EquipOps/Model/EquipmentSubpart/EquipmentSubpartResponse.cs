@@ -7,7 +7,7 @@
         public string? equipment_name { get; set; }
         public string name { get; set; } = string.Empty;
         public string? description { get; set; }
-        public string? status { get; set; }
+        public bool? status { get; set; }
         public string? qr_code { get; set; }
         public DateTime created_at { get; set; }
         public DateTime? updated_at { get; set; }

@@ -1,6 +1,7 @@
 ﻿using CommonHelper.Helper;
 using Dapper;
 using Npgsql;
+using NpgsqlTypes;
 using System.Data;
 using System.Dynamic;
 using static CommonHelper.Helpers.PgHelper;
@@ -203,9 +204,6 @@ namespace CommonHelper.Helpers
             return expando;
         }
     }
-
-
-
 
     public class DbParam
     {

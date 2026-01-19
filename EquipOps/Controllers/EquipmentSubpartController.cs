@@ -25,9 +25,9 @@ namespace EquipOps.Controllers
         }
 
         [HttpGet("equipmentSubpartList")]
-        public async Task<IActionResult> GetEquipmentSubpartList(string? search = "",int length = 10,int page = 1,string orderColumn = "name",string orderDirection = "ASC")
+        public async Task<IActionResult> GetEquipmentSubpartList(string? search = "", bool? status = null, int length = 10,int page = 1,string orderColumn = "name",string orderDirection = "ASC")
         {
-            var result = await _equipmentSubpartService.EquipmentSubpartListAsync(search, length, page, orderColumn, orderDirection);
+            var result = await _equipmentSubpartService.EquipmentSubpartListAsync(search, status, length, page, orderColumn, orderDirection);
             return Ok(result);
         }
 

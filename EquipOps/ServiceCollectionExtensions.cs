@@ -33,6 +33,9 @@ namespace EquipOps
             // Equipment Subparts
             services.AddScoped<IEquipmentSubpartService, EquipmentSubpartService>();
 
+            // Audit Logs
+            services.AddScoped<IAuditLogService, AuditLogService>();
+
             return services;
         }
     }
