@@ -1,4 +1,4 @@
-﻿using EquipOps.Model.Requests.Equipment;
+﻿using EquipOps.Model.Equipment;
 using FluentValidation;
 
 namespace EquipOps.Model.FluentValidationModel

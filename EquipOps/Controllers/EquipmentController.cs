@@ -1,6 +1,6 @@
 ﻿using CommonHelper.Enums;
 using CommonHelper.ResponseHelpers.Handlers;
-using EquipOps.Model.Requests.Equipment;
+using EquipOps.Model.Equipment;
 using EquipOps.Services.Implementation;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;

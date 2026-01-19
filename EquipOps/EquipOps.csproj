@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Model\Entities\**" />
+    <Compile Remove="Model\Responses\**" />
+    <Content Remove="Model\Entities\**" />
+    <Content Remove="Model\Responses\**" />
+    <EmbeddedResource Remove="Model\Entities\**" />
+    <EmbeddedResource Remove="Model\Responses\**" />
+    <None Remove="Model\Entities\**" />
+    <None Remove="Model\Responses\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentValidation" Version="12.1.1" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.1" />
@@ -17,11 +28,6 @@
     <ProjectReference Include="..\CommonHelper\CommonHelper.csproj" />
     <ProjectReference Include="..\OrganizationService.Api\OrganizationService.Api.csproj" />
     <ProjectReference Include="..\SettingService.Api\SettingService.Api.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Model\Entities\" />
-    <Folder Include="Model\Responses\" />
   </ItemGroup>
 
 </Project>

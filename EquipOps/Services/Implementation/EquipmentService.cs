@@ -3,7 +3,7 @@ using CommonHelper.Enums;
 using CommonHelper.Helper;
 using CommonHelper.Helpers;
 using CommonHelper.ResponseHelpers.Handlers;
-using EquipOps.Model.Requests.Equipment;
+using EquipOps.Model.Equipment;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 

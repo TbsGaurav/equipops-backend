@@ -1,4 +1,4 @@
-﻿using EquipOps.Model.Requests.Equipment;
+﻿using EquipOps.Model.Equipment;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EquipOps.Services.Implementation

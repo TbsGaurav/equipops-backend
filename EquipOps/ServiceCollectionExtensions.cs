@@ -40,6 +40,9 @@ namespace EquipOps
             // Audit Logs
             services.AddScoped<IAuditLogService, AuditLogService>();
 
+            // Permission
+            services.AddScoped<IPermissionService, PermissionService>();
+
             return services;
         }
     }

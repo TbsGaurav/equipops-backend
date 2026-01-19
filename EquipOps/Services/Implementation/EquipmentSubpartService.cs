@@ -28,10 +28,7 @@ namespace EquipOps.Services.Implementation
                     { "p_qr_code", new DbParam { Value = request.qr_code, DbType = DbType.String } }
                 };
 
-                var result = await pgHelper.CreateUpdateAsync(
-                    "master.sp_equipment_subpart_create_update",
-                    param
-                );
+                var result = await pgHelper.CreateUpdateAsync("master.sp_equipment_subpart_create_update",param);
 
                 string message = request.subpart_id == null || request.subpart_id == 0
                     ? "Equipment subpart created successfully."
@@ -64,10 +61,7 @@ namespace EquipOps.Services.Implementation
                     { "ref", new DbParam { Value = "equipment_subpart_by_id_cursor", DbType = DbType.String, Direction = ParameterDirection.InputOutput } }
                 };
 
-                dynamic result = await pgHelper.ListAsync(
-                    "master.sp_equipment_subpart_getbyid",
-                    param
-                );
+                dynamic result = await pgHelper.ListAsync("master.sp_equipment_subpart_getbyid",param);
 
                 var list = result.@ref as List<dynamic>;
 
@@ -103,10 +97,7 @@ namespace EquipOps.Services.Implementation
                     { "p_subpart_id", new DbParam { Value = subpart_id, DbType = DbType.Int32 } }
                 };
 
-                var result = await pgHelper.CreateUpdateAsync(
-                    "master.sp_equipment_subpart_delete",
-                    param
-                );
+                var result = await pgHelper.CreateUpdateAsync("master.sp_equipment_subpart_delete",param);
 
                 return new OkObjectResult(
                     ResponseHelper<dynamic>.Success("Equipment subpart deleted successfully.", result)
@@ -141,17 +132,9 @@ namespace EquipOps.Services.Implementation
                     { "ref", new DbParam { Value = "equipment_subpart_cursor", DbType = DbType.String, Direction = ParameterDirection.InputOutput } }
                 };
 
-                dynamic result = await pgHelper.ListAsync(
-                    "master.sp_equipment_subpart_list",
-                    param
-                );
+                dynamic result = await pgHelper.ListAsync("master.sp_equipment_subpart_list",param);
 
                 var list = result.@ref as List<dynamic>;
-
-                if (list == null || !list.Any())
-                    return new NotFoundObjectResult(
-                        ResponseHelper<string>.Error("No equipment subparts found.", statusCode:CommonHelper.Enums.StatusCodeEnum.NOT_FOUND)
-                    );
 
                 return new OkObjectResult(
                     ResponseHelper<dynamic>.Success("Equipment subparts retrieved.", new

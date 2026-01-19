@@ -1,4 +1,4 @@
-﻿namespace EquipOps.Model.Requests.Equipment
+﻿namespace EquipOps.Model.Equipment
 {
 	public class EquipmentRequest
 	{
