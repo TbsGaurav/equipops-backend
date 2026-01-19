@@ -47,6 +47,9 @@ namespace EquipOps.Services.Implementation
                 );
             }
         }
+		#endregion
+
+		#region  Get Equipment By Id
 
         public async Task<IActionResult> EquipmentCategoryByIdAsync(int category_id)
         {
@@ -86,6 +89,7 @@ namespace EquipOps.Services.Implementation
                 );
             }
         }
+		#endregion
 
         public async Task<IActionResult> EquipmentCategoryDeleteAsync(int category_id)
         {
@@ -116,6 +120,7 @@ namespace EquipOps.Services.Implementation
                 );
             }
         }
+		#endregion
 
         public async Task<IActionResult> EquipmentCategoryListAsync(string? search,int length,int page,string orderColumn,string orderDirection)
         {
@@ -164,5 +169,6 @@ namespace EquipOps.Services.Implementation
                 );
             }
         }
-    }
+		#endregion
+	}
 }

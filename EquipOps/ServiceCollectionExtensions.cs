@@ -21,8 +21,9 @@ namespace EquipOps
             // Vendor
             services.AddScoped<IVendorService, VendorService>();
 
-            // Equipment
-            services.AddScoped<IEquipmentCategoryService, EquipmentCategoryService>();
+			// Dashboard Category
+			services.AddValidatorsFromAssemblyContaining<DashboardCategoryValidator>();
+			services.AddScoped<IDashboardCategoryService, DashboardCategoryService>();
 
             // Equipment Failure
             services.AddScoped<IEquipmentFailureService, EquipmentFailureService>();
