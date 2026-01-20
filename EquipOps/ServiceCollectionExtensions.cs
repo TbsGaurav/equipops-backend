@@ -43,6 +43,9 @@ namespace EquipOps
             // Permission
             services.AddScoped<IPermissionService, PermissionService>();
 
+            // Role
+            services.AddScoped<IRoleService, RoleService>();
+
             return services;
         }
     }
