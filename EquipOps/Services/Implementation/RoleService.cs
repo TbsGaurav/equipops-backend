@@ -24,7 +24,6 @@ namespace EquipOps.Services.Implementation
                     { "p_description", new DbParam { Value = request.description, DbType = DbType.String } },
                     { "p_created_by", new DbParam { Value = request.created_by, DbType = DbType.Guid } },
                     { "p_role_name", new DbParam { Value = request.role_name, DbType = DbType.String } },
-                    { "p_is_delete", new DbParam { Value = request.is_delete, DbType = DbType.Boolean } },
                     { "p_is_active", new DbParam { Value = request.is_active, DbType = DbType.Boolean } },
       
                     { "o_role_id", new DbParam { DbType = DbType.Int32, Direction = ParameterDirection.Output } },

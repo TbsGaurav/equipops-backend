@@ -18,9 +18,9 @@ namespace EquipOps.Controllers
         }
 
         [HttpGet("auditLogById")]
-        public async Task<IActionResult> AuditLogById(long auditId)
+        public async Task<IActionResult> AuditLogById(int audit_id)
         {
-            var result = await auditLogService.AuditLogByIdAsync(auditId);
+            var result = await auditLogService.AuditLogByIdAsync(audit_id);
             return Ok(result);
         }
 

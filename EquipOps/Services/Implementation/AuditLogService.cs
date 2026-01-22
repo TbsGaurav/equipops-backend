@@ -44,14 +44,14 @@ namespace EquipOps.Services.Implementation
             }
         }
 
-        public async Task<IActionResult> AuditLogByIdAsync(long auditId)
+        public async Task<IActionResult> AuditLogByIdAsync(int audit_id)
         {
             try
             {
                 var param = new Dictionary<string, DbParam>
             {
-                { "p_audit_id", new DbParam { Value = auditId, DbType = DbType.Int64 } },
-                { "ref", new DbParam { Value = "audit_log_by_id_cursor", DbType = DbType.String, Direction = ParameterDirection.InputOutput } }
+                { "p_audit_id", new DbParam { Value = audit_id, DbType = DbType.Int32 } },
+                { "ref", new DbParam { Value = "audit_log_by_id_cursor", DbType = DbType.String, Direction = ParameterDirection.InputOutput }}
             };
 
                 dynamic result = await pgHelper.ListAsync("master.sp_audit_log_getbyid", param);
