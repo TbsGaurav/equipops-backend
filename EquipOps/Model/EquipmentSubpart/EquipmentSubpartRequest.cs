@@ -7,6 +7,5 @@
         public string subpart_name { get; set; } = string.Empty;
         public string? description { get; set; }
         public bool? status { get; set; }
-        public string? qr_code { get; set; }
     }
 }

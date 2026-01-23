@@ -46,6 +46,9 @@ namespace EquipOps
             // Role
             services.AddScoped<IRoleService, RoleService>();
 
+            // DowntimeLog
+            services.AddScoped<IDowntimeLogService, DowntimeLogService>();
+
             return services;
         }
     }

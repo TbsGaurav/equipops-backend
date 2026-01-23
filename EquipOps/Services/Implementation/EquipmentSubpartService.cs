@@ -22,12 +22,12 @@ namespace EquipOps.Services.Implementation
                 {
                     { "p_return_subpart_id", new DbParam { DbType = DbType.Int32, Direction = ParameterDirection.InputOutput } },
                     { "p_return_updated_at", new DbParam { DbType = DbType.DateTime, Direction = ParameterDirection.InputOutput } },
+                
                     { "p_subpart_id", new DbParam { Value = request.subpart_id, DbType = DbType.Int32 } },
                     { "p_equipment_id", new DbParam { Value = request.equipment_id, DbType = DbType.Int32 } },
                     { "p_subpart_name", new DbParam { Value = request.subpart_name, DbType = DbType.String } },
                     { "p_description", new DbParam { Value = request.description, DbType = DbType.String } },
-                    { "p_status", new DbParam { Value = request.status, DbType = DbType.Boolean } },
-                    { "p_qr_code", new DbParam { Value = request.qr_code, DbType = DbType.String } }
+                    { "p_status", new DbParam { Value = request.status, DbType = DbType.Boolean } }
                 };
 
                 var result = await pgHelper.CreateUpdateAsync("master.sp_equipment_subpart_create_update",param);
@@ -36,13 +36,12 @@ namespace EquipOps.Services.Implementation
                     ? "Equipment subpart created successfully."
                     : "Equipment subpart updated successfully.";
 
-                return new OkObjectResult(
-                    ResponseHelper<dynamic>.Success(message, result)
-                );
+                return new OkObjectResult(ResponseHelper<dynamic>.Success(message, result));
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, "Equipment Subpart save error");
+
                 return new ObjectResult(
                     ResponseHelper<string>.Error(
                         ConstantMessages.InternalServerErrorMessage,
@@ -52,6 +51,7 @@ namespace EquipOps.Services.Implementation
                 );
             }
         }
+
         #endregion
 
         #region  EquipmentSubpart Bet By Id
@@ -66,13 +66,13 @@ namespace EquipOps.Services.Implementation
                     { "ref", new DbParam { Value = "equipment_subpart_by_id_cursor", DbType = DbType.String, Direction = ParameterDirection.InputOutput } }
                 };
 
-                dynamic result = await pgHelper.ListAsync("master.sp_equipment_subpart_getbyid",param);
+                dynamic result = await pgHelper.ListAsync("master.sp_equipment_subpart_getbyid", param);
 
                 var list = result.@ref as List<dynamic>;
 
                 if (list == null || !list.Any())
                     return new NotFoundObjectResult(
-                        ResponseHelper<string>.Error("Equipment subpart not found.", statusCode:CommonHelper.Enums.StatusCodeEnum.NOT_FOUND)
+                        ResponseHelper<string>.Error("Equipment subpart not found.", statusCode: CommonHelper.Enums.StatusCodeEnum.NOT_FOUND)
                     );
 
                 return new OkObjectResult(
@@ -95,7 +95,7 @@ namespace EquipOps.Services.Implementation
 
         #region EquipmentSubpart List
 
-        public async Task<IActionResult> EquipmentSubpartListAsync(string? search, bool? status, int length,int page,string orderColumn,string orderDirection)
+        public async Task<IActionResult> EquipmentSubpartListAsync(string? search, bool? status, int length, int page, string orderColumn, string orderDirection)
         {
             try
             {
@@ -111,7 +111,7 @@ namespace EquipOps.Services.Implementation
                     { "ref", new DbParam { Value = "equipment_subpart_cursor", DbType = DbType.String, Direction = ParameterDirection.InputOutput } }
                 };
 
-                dynamic result = await pgHelper.ListAsync("master.sp_equipment_subpart_list",param);
+                dynamic result = await pgHelper.ListAsync("master.sp_equipment_subpart_list", param);
 
                 var list = result.@ref as List<dynamic>;
 
