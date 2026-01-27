@@ -49,6 +49,9 @@ namespace EquipOps
             // DowntimeLog
             services.AddScoped<IDowntimeLogService, DowntimeLogService>();
 
+            // DashboardData
+            services.AddScoped<IDashboardDataService, DashboardDataService>();
+
             return services;
         }
     }

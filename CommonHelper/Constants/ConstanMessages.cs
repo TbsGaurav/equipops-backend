@@ -1,4 +1,4 @@
-﻿namespace CommonHelper.constants
+﻿namespace CommonHelper.Constants
 {
     public static class ConstantMessages
     {

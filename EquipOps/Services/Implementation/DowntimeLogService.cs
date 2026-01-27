@@ -1,4 +1,4 @@
-﻿using CommonHelper.constants;
+﻿using CommonHelper.Constants;
 using CommonHelper.Helper;
 using CommonHelper.Helpers;
 using CommonHelper.ResponseHelpers.Handlers;
@@ -11,6 +11,8 @@ namespace EquipOps.Services.Implementation
 {
     public class DowntimeLogService(IPgHelper pgHelper, ILogger<DowntimeLogService> logger) : IDowntimeLogService
     {
+        #region DowntimeLog Create Update
+
         public async Task<IActionResult> DowntimeLogCreateUpdateAsync(DowntimeLogRequest request)
         {
             try
@@ -55,5 +57,6 @@ namespace EquipOps.Services.Implementation
                 );
             }
         }
+        #endregion
     }
 }
