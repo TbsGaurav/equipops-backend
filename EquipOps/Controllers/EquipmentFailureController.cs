@@ -1,5 +1,8 @@
-﻿using EquipOps.Model.EquipmentFailure;
+﻿using CommonHelper.Enums;
+using CommonHelper.ResponseHelpers.Handlers;
+using EquipOps.Model.EquipmentFailure;
 using EquipOps.Services.Interface;
+using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,20 +11,20 @@ namespace EquipOps.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [AllowAnonymous]
-    public class EquipmentFailureController : ControllerBase
+    public class EquipmentFailureController(ILogger<EquipmentFailureController> logger, IEquipmentFailureService _equipmentFailureService) : ControllerBase
     {
-        private readonly IEquipmentFailureService _equipmentFailureService;
-
-        public EquipmentFailureController(IEquipmentFailureService equipmentFailureService)
-        {
-            _equipmentFailureService = equipmentFailureService;
-        }
-
         [HttpPost("equipmentFailureCreateUpdate")]
-        public async Task<IActionResult> EquipmentFailureCreate([FromBody] EquipmentFailureRequest request)
+        public async Task<IActionResult> FailureCreateUpdate([FromBody] EquipmentFailureRequest request, [FromServices] IValidator<EquipmentFailureRequest> validator)
         {
-            var result = await _equipmentFailureService.EquipmentFailureCreateAsync(request);
-            return Ok(result);
+            logger.LogInformation("API hit: CreateOrUpdate. Name={Name}", request.failure_type);
+
+            var result = await validator.ValidateAsync(request);
+            if (!result.IsValid)
+            {
+                var errors = result.Errors.Select(e => e.ErrorMessage).ToList();
+                return BadRequest(ResponseHelper<object>.Error(message: "Validation failed.", errors: errors, statusCode: StatusCodeEnum.BAD_REQUEST));
+            }
+            return await _equipmentFailureService.EquipmentFailureCreateUpdateAsync(request);
         }
 
         [HttpGet("equipmentFailureList")]

@@ -19,6 +19,7 @@ namespace EquipOps
 			services.AddScoped<IEquipmentService, EquipmentService>();
 
             // Vendor
+            services.AddValidatorsFromAssemblyContaining<VendorRequestValidator>();
             services.AddScoped<IVendorService, VendorService>();
 
 			// Dashboard Category
@@ -26,15 +27,18 @@ namespace EquipOps
 			services.AddScoped<IDashboardCategoryService, DashboardCategoryService>();
 
             // Equipment Failure
+            services.AddValidatorsFromAssemblyContaining<EquipmentFailureRequestValidator>();
             services.AddScoped<IEquipmentFailureService, EquipmentFailureService>();
 
             // Equipment Category
+            services.AddValidatorsFromAssemblyContaining<EquipmentCategoryRequestValidator>();
             services.AddScoped<IEquipmentCategoryService, EquipmentCategoryService>();
 
             // Organization
             services.AddScoped<IOrganizationService1, OrganizationService1>();
 
             // Equipment Subparts
+            services.AddValidatorsFromAssemblyContaining<EquipmentSubpartRequestValidator>();
             services.AddScoped<IEquipmentSubpartService, EquipmentSubpartService>();
 
             // Audit Logs

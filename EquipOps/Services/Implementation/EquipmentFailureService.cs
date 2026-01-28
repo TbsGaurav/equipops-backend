@@ -14,7 +14,7 @@ namespace EquipOps.Services.Implementation
     {
         #region Create/Update Equipment Failure
 
-        public async Task<IActionResult> EquipmentFailureCreateAsync(EquipmentFailureRequest request)
+        public async Task<IActionResult> EquipmentFailureCreateUpdateAsync(EquipmentFailureRequest request)
         {
             try
             {

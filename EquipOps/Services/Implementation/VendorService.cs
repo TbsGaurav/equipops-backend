@@ -14,7 +14,7 @@ namespace EquipOps.Services.Implementation
     {
         #region Create/Update Vendor
 
-        public async Task<IActionResult> VendorCreateAsync(VendorRequest request)
+        public async Task<IActionResult> VendorCreateUpdateAsync(VendorRequest request)
         {
             try
             {

@@ -1,33 +1,37 @@
-﻿using EquipOps.Model.Vendor;
+﻿using CommonHelper.Enums;
+using CommonHelper.ResponseHelpers.Handlers;
+using EquipOps.Model.Vendor;
 using EquipOps.Services.Interface;
+using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EquipOps.Controllers 
+namespace EquipOps.Controllers
 {
     [Route("api/[controller]")]
     //[Authorize]
     [AllowAnonymous]
 
-    public class VendorController(IVendorService _vendorService) : ControllerBase
+    public class VendorController(ILogger<VendorController> logger, IVendorService _vendorService) : ControllerBase
     {
         [HttpPost("vendorCreateUpdate")]
-        public async Task<IActionResult> VendorCreate([FromBody] VendorRequest request)
+        public async Task<IActionResult> VendorCreateUpdate([FromBody] VendorRequest request, [FromServices] IValidator<VendorRequest> validator)
         {
-            var result = await _vendorService.VendorCreateAsync(request);
-            return Ok(result);
+            logger.LogInformation("API hit: CreateOrUpdateVendor. Name={Name}", request.name);
+
+            var result = await validator.ValidateAsync(request);
+            if (!result.IsValid)
+            {
+                var errors = result.Errors.Select(e => e.ErrorMessage).ToList();
+                return BadRequest(ResponseHelper<object>.Error(message: "Validation failed.", errors: errors, statusCode: StatusCodeEnum.BAD_REQUEST));
+            }
+            return await _vendorService.VendorCreateUpdateAsync(request);
         }
 
         [HttpGet("vendorList")]
         public async Task<IActionResult> GetVendorList(string? search = "", int length = 10, int page = 1, string orderColumn = "name", string orderDirection = "ASC")
         {
-            var result = await _vendorService.VendorListAsync(
-                search,
-                length,
-                page,
-                orderColumn,
-                orderDirection
-            );
+            var result = await _vendorService.VendorListAsync(search,length,page,orderColumn,orderDirection);
             return Ok(result);
         }
 
