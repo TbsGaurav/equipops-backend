@@ -49,7 +49,11 @@ namespace EquipOps
             // DowntimeLog
             services.AddScoped<IDowntimeLogService, DowntimeLogService>();
 
-            return services;
+			// SLA Metrics
+			services.AddValidatorsFromAssemblyContaining<SlaMetricsRequestValidator>();
+			services.AddScoped<ISlaMetricsService, SlaMetricsService>();
+
+			return services;
         }
     }
 }
