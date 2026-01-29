@@ -56,7 +56,11 @@ namespace EquipOps
             // DashboardData
             services.AddScoped<IDashboardDataService, DashboardDataService>();
 
-            return services;
+			// SLA Metrics
+			services.AddValidatorsFromAssemblyContaining<SlaMetricsRequestValidator>();
+			services.AddScoped<ISlaMetricsService, SlaMetricsService>();
+
+			return services;
         }
     }
 }
