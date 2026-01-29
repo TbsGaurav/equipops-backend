@@ -1,4 +1,4 @@
-﻿using CommonHelper.constants;
+﻿using CommonHelper.Constants;
 using CommonHelper.Enums;
 using CommonHelper.Helper;
 using CommonHelper.Helpers;
@@ -10,8 +10,7 @@ using System.Data;
 
 namespace EquipOps.Services.Implementation
 {
-	public sealed class SlaMetricsService(IPgHelper pgHelper, ILogger<SlaMetricsService> logger)
-		: ISlaMetricsService
+	public sealed class SlaMetricsService(IPgHelper pgHelper, ILogger<SlaMetricsService> logger): ISlaMetricsService
 	{
 		#region Create / Update
 		public async Task<IActionResult> AddOrUpdateAsync(SlaMetricsRequest request)
