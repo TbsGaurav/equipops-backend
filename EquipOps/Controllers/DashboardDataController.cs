@@ -28,9 +28,9 @@ namespace EquipOps.Controllers
             return Ok(await _dashboardDataService.DashboardRebuildAsync(request));
         }
         [HttpGet("dashboardList")]
-        public async Task<IActionResult> GetDashboardDataList(string? search = "", int length = 10, int page = 1, string orderColumn = "name", string orderDirection = "ASC")
+        public async Task<IActionResult> GetDashboardDataList(string? search = "", int length = 10, int page = 1, string orderColumn = "name", string orderDirection = "ASC",DateTime? periodStart = null,DateTime? periodEnd = null)
         {
-            var result = await _dashboardDataService.DashboardDataListAsync(search, length, page, orderColumn, orderDirection);
+            var result = await _dashboardDataService.DashboardDataListAsync(search, length, page, orderColumn, orderDirection,periodStart,periodEnd);
             return Ok(result);
         }
 

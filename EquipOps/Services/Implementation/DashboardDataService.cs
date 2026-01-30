@@ -112,7 +112,7 @@ namespace EquipOps.Services.Implementation
 
         #region Dashboard Data List
 
-        public async Task<IActionResult> DashboardDataListAsync(string? search, int length, int page, string orderColumn, string orderDirection)
+        public async Task<IActionResult> DashboardDataListAsync(string? search, int length, int page, string orderColumn, string orderDirection, DateTime? periodStart,DateTime? periodEnd)
         {
             try
             {
@@ -123,7 +123,11 @@ namespace EquipOps.Services.Implementation
                     { "p_page", new DbParam { Value = page, DbType = DbType.Int32 } },
                     { "p_order_column", new DbParam { Value = orderColumn, DbType = DbType.String } },
                     { "p_order_direction", new DbParam { Value = orderDirection, DbType = DbType.String } },
+                    { "p_period_start", new DbParam { Value = periodStart, DbType = DbType.Date } },
+                    { "p_period_end", new DbParam { Value = periodEnd, DbType = DbType.Date } },
+
                     { "o_total_records", new DbParam { DbType = DbType.Int32, Direction = ParameterDirection.InputOutput } },
+
                     { "ref", new DbParam { Value = "dashboard_data_cursor", DbType = DbType.String, Direction = ParameterDirection.InputOutput } }
                 };
 
