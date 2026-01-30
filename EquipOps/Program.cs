@@ -10,15 +10,17 @@ builder.Services.AddLogging();
 builder.Services.AddHttpContextAccessor();
 
 #region CORS Configuration
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:5174")
-              .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials();
+        policy.WithOrigins(
+                "http://localhost:5174",
+                "http://192.168.1.100:7007"
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
     });
 });
 #endregion
@@ -45,9 +47,8 @@ if (app.Environment.IsDevelopment())
 #endregion
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
-app.UseCors("AllowFrontend");
 app.UseRouting();
+app.UseCors("AllowFrontend");
 app.UseAuthorization();
 app.MapControllers();
 

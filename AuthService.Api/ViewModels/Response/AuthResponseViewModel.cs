@@ -5,7 +5,7 @@ namespace AuthService.Api.ViewModels.Response
 	public class AuthResponseViewModel
 	{
 		public Guid? UserId { get; set; }
-		public Guid? OrganizationId { get; set; }
+		public int? OrganizationId { get; set; }
 		public string? OrganizationName { get; set; }
 		public string? RoleName { get; set; }
 		public string? WebsiteUrl { get; set; }

@@ -14,7 +14,7 @@ namespace Common.Services.JwtAuthentication
     {
         private readonly RequestDelegate _next;
         private readonly string _secret;
-        private const string InternalApiKey = "SERVICE_KEY_123"; // your internal key
+        private const string InternalApiKey = "SERVICE_KEY_123"; 
         public JwtMiddleware(RequestDelegate next, IOptions<JwtSettings> jwtSettings)
         {
             _next = next;

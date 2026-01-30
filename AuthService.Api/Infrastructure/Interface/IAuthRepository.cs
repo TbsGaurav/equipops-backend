@@ -12,6 +12,6 @@ namespace AuthService.Api.Infrastructure.Interface
 		Task<bool> UpdatePasswordAsync(string token, string hashedPassword, UserTokenResponse user);
 		Task<bool> ChangePasswordAsync(Guid userId, string hashedPassword);
 		Task<bool> LogoutAsync(Guid? userId);
-		Task<List<Subscription>> GetSubscriptionByOrganizationIdAsync(Guid? OrganizationId);
+		Task<List<Subscription>> GetSubscriptionByOrganizationIdAsync(int? OrganizationId);
 	}
 }

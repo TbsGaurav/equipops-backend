@@ -6,7 +6,12 @@
             => BCrypt.Net.BCrypt.HashPassword(password);
 
         public static bool VerifyPassword(string password, string hash)
-            => BCrypt.Net.BCrypt.Verify(password, hash);
+        {
+            if (string.IsNullOrWhiteSpace(hash))
+                throw new ArgumentException("Hash cannot be null or empty.", nameof(hash));
+
+            return BCrypt.Net.BCrypt.Verify(password, hash);
+        }
 
         public static string GenerateRandomPassword(int length = 12)
         {

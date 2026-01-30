@@ -2,12 +2,8 @@
 using AuthService.Api.Infrastructure.Interface;
 using AuthService.Api.Infrastructure.Repositories;
 using AuthService.Api.Services.Interface;
-
 using Common.Services.Services.Implementation;
 using Common.Services.Services.Interface;
-
-
-
 
 namespace AuthService.Api
 {
@@ -15,8 +11,6 @@ namespace AuthService.Api
     {
         public static IServiceCollection WithRegisterServices(this IServiceCollection services)
         {
-
-
             services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
 			services.AddHttpClient();
 
